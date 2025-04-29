@@ -8,8 +8,10 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   KeyboardAvoidingView,
-  Platform
+  Platform,
+  Image
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function App() {
   const [username, setUsername] = useState("");
@@ -29,49 +31,57 @@ export default function App() {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={styles.container}
-      >
-        <View style={styles.card}>
-          <Text style={styles.header}>Welcome Back</Text>
-
-          <TextInput
-            style={styles.input}
-            placeholder="Username"
-            placeholderTextColor="#f8a8d3"
-            value={username}
-            onChangeText={setUsername}
-            contextMenuHidden={true}
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#1c1822" }}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          keyboardVerticalOffset={Platform.OS === "ios" ? 60 : 0}
+          style={styles.container}
+        >
+          <Image
+            source={require("./assets/gigradar-logo.png")}
+            style={styles.logo}
+            resizeMode="contain"
           />
+          <View style={styles.card}>
+            <Text style={styles.header}>Welcome Back</Text>
 
-          <TextInput
-            style={styles.input}
-            placeholder="Password"
-            placeholderTextColor="#f8a8d3"
-            secureTextEntry
-            value={password}
-            onChangeText={setPassword}
-            contextMenuHidden={true}
-          />
+            <TextInput
+              style={styles.input}
+              placeholder="Username"
+              placeholderTextColor="#f8a8d3"
+              value={username}
+              onChangeText={setUsername}
+              contextMenuHidden={true}
+            />
 
-          <TouchableOpacity>
-            <Text style={styles.forgotPassword}>Forgot Password?</Text>
-          </TouchableOpacity>
+            <TextInput
+              style={styles.input}
+              placeholder="Password"
+              placeholderTextColor="#f8a8d3"
+              secureTextEntry
+              value={password}
+              onChangeText={setPassword}
+              contextMenuHidden={true}
+            />
 
-          <Text style={styles.orText}>OR</Text>
+            <TouchableOpacity>
+              <Text style={styles.forgotPassword}>Forgot Password?</Text>
+            </TouchableOpacity>
 
-          <TouchableOpacity>
-            <Text style={styles.createAccount}>Create an account?</Text>
-          </TouchableOpacity>
+            <Text style={styles.orText}>OR</Text>
 
-          <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-            <Text style={styles.buttonText}>Login</Text>
-          </TouchableOpacity>
-        </View>
-      </KeyboardAvoidingView>
-    </TouchableWithoutFeedback>
+            <TouchableOpacity>
+              <Text style={styles.createAccount}>Create an account?</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
+              <Text style={styles.buttonText}>Login</Text>
+            </TouchableOpacity>
+          </View>
+        </KeyboardAvoidingView>
+      </TouchableWithoutFeedback>
+    </SafeAreaView>
   );
 }
 
@@ -80,7 +90,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#1c1822",
     alignItems: "center",
-    justifyContent: "center",
     padding: 20
   },
   card: {
@@ -139,5 +148,10 @@ const styles = StyleSheet.create({
     color: "#f8a8d3",
     marginVertical: 1,
     fontSize: 10
+  },
+  logo: {
+    width: 120,
+    height: 120,
+    marginBottom: 20
   }
 });

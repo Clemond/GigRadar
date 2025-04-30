@@ -13,27 +13,33 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "./firebaseConfig";
 
 export default function App() {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = () => {
-    console.log("Logging in with", username, password);
+  const handleLogin = async () => {
     Keyboard.dismiss();
-  };
-
-  const handleGoogleLogin = () => {
-    console.log("Login with Google");
-  };
-
-  const handleFacebookLogin = () => {
-    console.log("Login with Facebook");
+    try {
+      const userCredentials = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      console.log(
+        "Successfully logged in: " +
+          JSON.stringify(userCredentials.user, null, 2)
+      );
+    } catch {
+      console.log("Login failed");
+    }
   };
 
   return (
     <LinearGradient
-      colors={["#2A2232", "#e0b0a0", "#150E17"]} // Lighter at the top, darker at the bottom
+      colors={["#2A2232", "#e0b0a0", "#150E17"]}
       start={{ x: 0, y: 0 }}
       end={{ x: 0, y: 1 }}
       style={styles.gradient}
@@ -57,8 +63,8 @@ export default function App() {
                 style={styles.input}
                 placeholder="Username"
                 placeholderTextColor="#f8a8d3"
-                value={username}
-                onChangeText={setUsername}
+                value={email}
+                onChangeText={setEmail}
                 contextMenuHidden={true}
               />
 

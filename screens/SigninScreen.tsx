@@ -8,8 +8,13 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
 import SigninForm from "../components/forms/SigninForm";
+import { Snackbar } from "react-native-paper";
+import { useState } from "react";
 
 export default function SigninScreen() {
+  const [isSnackbarVisible, setIsSnackbarVisible] = useState<boolean>(false);
+  const onDismissSnackBar = () => setIsSnackbarVisible(false);
+
   return (
     <LinearGradient
       colors={["#2A2232", "#e0b0a0", "#150E17"]}
@@ -24,10 +29,19 @@ export default function SigninScreen() {
             keyboardVerticalOffset={Platform.OS === "ios" ? 60 : 0}
             style={styles.container}
           >
-            <SigninForm />
+            <SigninForm setIsSnackbarVisible={setIsSnackbarVisible} />
           </KeyboardAvoidingView>
         </TouchableWithoutFeedback>
       </SafeAreaView>
+      <Snackbar
+        visible={isSnackbarVisible}
+        onDismiss={onDismissSnackBar}
+        action={{
+          label: "Close"
+        }}
+      >
+        Wrong Credentials
+      </Snackbar>
     </LinearGradient>
   );
 }

@@ -7,18 +7,28 @@ import {
   View,
   Text,
   TouchableOpacity,
-  StyleSheet
+  StyleSheet,
+  Keyboard
 } from "react-native";
 
-export default function SigninForm() {
+export default function SigninForm({
+  setIsSnackbarVisible
+}: {
+  setIsSnackbarVisible: (boolean: boolean) => void;
+}) {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const [email, setEmail] = useState<string | null>(null);
   const [password, setPassword] = useState<string | null>(null);
+
   const { signIn } = useSignin();
 
-  function handleLogin() {
+  async function handleLogin() {
+    Keyboard.dismiss();
     if (!email || !password) return;
-    signIn(email, password);
+    const result = await signIn(email, password);
+    if (!result) {
+      setIsSnackbarVisible(true);
+    }
   }
 
   return (

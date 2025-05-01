@@ -1,14 +1,12 @@
 import { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebaseConfig";
-import { Keyboard } from "react-native";
 
 export function useSignin() {
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<boolean | null>(null);
 
   const signIn = async (email: string, password: string) => {
-    Keyboard.dismiss();
     setLoading(true);
     setError(null);
 
@@ -19,10 +17,11 @@ export function useSignin() {
         password
       );
       console.log("Successfully logged in" + email);
+      setError(false);
       return userCredentials.user;
     } catch (error) {
       console.log("Login failed" + error);
-      setError("Invalid credentials");
+      setError(true);
     } finally {
       setLoading(false);
     }

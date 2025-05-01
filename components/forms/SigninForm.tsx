@@ -41,6 +41,7 @@ export default function SigninForm({
         value={email}
         onChangeText={setEmail}
         contextMenuHidden={true}
+        autoCapitalize="none"
       />
 
       <TextInput
@@ -51,6 +52,7 @@ export default function SigninForm({
         value={password}
         onChangeText={setPassword}
         contextMenuHidden={true}
+        autoCapitalize="none"
       />
 
       <TouchableOpacity>

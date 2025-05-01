@@ -54,11 +54,6 @@ export default function SigninScreen() {
             keyboardVerticalOffset={Platform.OS === "ios" ? 60 : 0}
             style={styles.container}
           >
-            <Image
-              source={require("../assets/gigradar-logo.png")}
-              style={styles.logo}
-              resizeMode="contain"
-            />
             <View style={styles.card}>
               <Text style={styles.header}>Welcome Back</Text>
 
@@ -110,6 +105,7 @@ const styles = StyleSheet.create({
     flex: 1,
     //backgroundColor: "#1c1822",
     alignItems: "center",
+    justifyContent: "center",
     padding: 20
   },
   card: {

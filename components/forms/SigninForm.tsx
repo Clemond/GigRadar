@@ -18,18 +18,15 @@ export default function SigninForm({
   setIsSnackbarVisible: (boolean: boolean) => void;
 }) {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-  const [email, setEmail] = useState<string | null>(null);
-  const [password, setPassword] = useState<string | null>(null);
-
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const { signIn, loading } = useSignin();
 
   async function handleLogin() {
     Keyboard.dismiss();
-    if (!email || !password) return;
-    const result = await signIn(email, password);
-    if (!result) {
-      setIsSnackbarVisible(true);
-    }
+
+    const user = await signIn(email, password);
+    if (!user) setIsSnackbarVisible(true);
   }
 
   return (
@@ -39,7 +36,7 @@ export default function SigninForm({
         style={styles.input}
         placeholder="Username"
         placeholderTextColor="#f8a8d3"
-        value={email ?? ""}
+        value={email}
         onChangeText={setEmail}
         contextMenuHidden={true}
       />
@@ -49,7 +46,7 @@ export default function SigninForm({
         placeholder="Password"
         placeholderTextColor="#f8a8d3"
         secureTextEntry
-        value={password ?? ""}
+        value={password}
         onChangeText={setPassword}
         contextMenuHidden={true}
       />

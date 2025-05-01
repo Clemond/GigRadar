@@ -17,6 +17,7 @@ export function useSignin() {
 
       return userCredentials.user;
     } catch (error) {
+      return null;
     } finally {
       setLoading(false);
     }

@@ -1,47 +1,29 @@
 import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { RootStackParamList } from "../../types/navigation.types";
+import { useState } from "react";
+import { useSignin } from "../../hooks/useSignin";
 import {
   TextInput,
   View,
   Text,
   TouchableOpacity,
-  StyleSheet,
-  Keyboard
+  StyleSheet
 } from "react-native";
-import { RootStackParamList } from "../../types/navigation.types";
-import { auth } from "../../firebaseConfig";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { useState } from "react";
 
 export default function SigninForm() {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const [email, setEmail] = useState<string | null>(null);
   const [password, setPassword] = useState<string | null>(null);
+  const { signIn } = useSignin();
 
-  // ! Move this to a signIn hook file or something like that
-  const handleLogin = async () => {
-    Keyboard.dismiss();
-
+  function handleLogin() {
     if (!email || !password) return;
-
-    try {
-      const userCredentials = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      console.log(
-        "Successfully logged in: " +
-          JSON.stringify(userCredentials.user, null, 2)
-      );
-    } catch {
-      console.log("Login failed");
-    }
-  };
+    signIn(email, password);
+  }
 
   return (
     <View style={styles.card}>
       <Text style={styles.header}>Welcome Back</Text>
-
       <TextInput
         style={styles.input}
         placeholder="Username"

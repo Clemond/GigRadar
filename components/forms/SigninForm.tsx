@@ -24,9 +24,11 @@ export default function SigninForm({
 
   async function handleLogin() {
     Keyboard.dismiss();
-
     const user = await signIn(email, password);
     if (!user) setIsSnackbarVisible(true);
+    if (user) {
+      navigation.navigate("HomeScreen");
+    }
   }
 
   return (
@@ -34,11 +36,12 @@ export default function SigninForm({
       <Text style={styles.header}>Welcome Back</Text>
       <TextInput
         style={styles.input}
-        placeholder="Username"
+        placeholder="Email"
         placeholderTextColor="#f8a8d3"
         value={email}
         onChangeText={setEmail}
         contextMenuHidden={true}
+        autoCapitalize="none"
       />
 
       <TextInput
@@ -49,9 +52,10 @@ export default function SigninForm({
         value={password}
         onChangeText={setPassword}
         contextMenuHidden={true}
+        autoCapitalize="none"
       />
 
-      <TouchableOpacity onPress={() => navigation.navigate("Test")}>
+      <TouchableOpacity>
         <Text style={styles.forgotPassword}>Forgot Password?</Text>
       </TouchableOpacity>
 

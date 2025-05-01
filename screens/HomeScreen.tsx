@@ -3,7 +3,7 @@ import React from "react";
 import { Button, Text, View } from "react-native";
 import { RootStackParamList } from "../types/navigation.types";
 
-export default function TestScreen() {
+export default function HomeScreen() {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   return (

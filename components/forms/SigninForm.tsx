@@ -10,6 +10,7 @@ import {
   StyleSheet,
   Keyboard
 } from "react-native";
+import { ActivityIndicator } from "react-native-paper";
 
 export default function SigninForm({
   setIsSnackbarVisible
@@ -20,7 +21,7 @@ export default function SigninForm({
   const [email, setEmail] = useState<string | null>(null);
   const [password, setPassword] = useState<string | null>(null);
 
-  const { signIn } = useSignin();
+  const { signIn, loading } = useSignin();
 
   async function handleLogin() {
     Keyboard.dismiss();
@@ -64,7 +65,14 @@ export default function SigninForm({
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Login</Text>
+        <Text style={styles.buttonText}>
+          {" "}
+          {loading ? (
+            <ActivityIndicator animating={true} color="#2a2232" />
+          ) : (
+            "Login"
+          )}
+        </Text>
       </TouchableOpacity>
     </View>
   );

@@ -37,7 +37,7 @@ export default function SigninForm({
       <TextInput
         style={styles.input}
         placeholder="Email"
-        placeholderTextColor="#f8a8d3"
+        placeholderTextColor="#8CAFC5"
         value={email}
         onChangeText={setEmail}
         contextMenuHidden={true}
@@ -47,7 +47,7 @@ export default function SigninForm({
       <TextInput
         style={styles.input}
         placeholder="Password"
-        placeholderTextColor="#f8a8d3"
+        placeholderTextColor="#8CAFC5"
         secureTextEntry
         value={password}
         onChangeText={setPassword}
@@ -82,7 +82,7 @@ export default function SigninForm({
 const styles = StyleSheet.create({
   card: {
     width: "100%",
-    backgroundColor: "#2a2232",
+    backgroundColor: "#0C2D33",
     borderRadius: 20,
     padding: 30,
     shadowColor: "#000",
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   header: {
-    color: "#f8a8d3",
+    color: "#FFFFFF",
     fontSize: 32,
     fontWeight: "bold",
     marginBottom: 30
@@ -102,19 +102,20 @@ const styles = StyleSheet.create({
     width: "100%",
     padding: 15,
     marginBottom: 20,
-    backgroundColor: "#3a2c39",
-    color: "#f8a8d3",
+    backgroundColor: "#13353C",
+    color: "#FFFFFF",
     borderRadius: 10,
     fontSize: 16
   },
   forgotPassword: {
-    color: "#f8a8d3",
+    // ! Change so theres one style for this and the one bellow!
+    color: "#8CAFC5",
     fontSize: 14,
     alignSelf: "flex-end",
     marginVertical: 5
   },
   createAccount: {
-    color: "#f8a8d3",
+    color: "#8CAFC5",
     fontSize: 14,
     alignSelf: "flex-end",
     marginVertical: 5
@@ -122,18 +123,18 @@ const styles = StyleSheet.create({
   loginButton: {
     width: "100%",
     padding: 18,
-    backgroundColor: "#f8a8d3",
+    backgroundColor: "#F77E32",
     borderRadius: 10,
     alignItems: "center",
     marginTop: 20
   },
   buttonText: {
-    color: "#1c1822",
+    color: "#061A1E",
     fontSize: 18,
     fontWeight: "bold"
   },
   orText: {
-    color: "#f8a8d3",
+    color: "#8CAFC5",
     marginVertical: 1,
     fontSize: 10
   }

@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, TextInput, StatusBar } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import ConcertList from "../components/homeScreen/ConcertList";
+import BottomNavBar from "../components/nav-bar/BottomNavBar";
 
 const tameImpalaImage = require("../assets/tameimpala.jpg");
 const billieeilishImage = require("../assets/billieeilish.jpg");
@@ -49,6 +50,7 @@ export default function HomeScreen() {
 
         <ConcertList concertList={recommendedEvents} />
       </SafeAreaView>
+      <BottomNavBar />
     </View>
   );
 }

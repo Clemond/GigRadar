@@ -86,43 +86,5 @@ const styles = StyleSheet.create({
     color: "#8CAFC5",
     marginBottom: 10,
     fontWeight: "600"
-  },
-  card: {
-    backgroundColor: "#1A3C47",
-    margin: 15,
-    borderRadius: 10,
-    overflow: "hidden"
-  },
-  cardContent: {
-    padding: 50,
-    alignItems: "center"
-  },
-  cardBackgroundImage: {
-    opacity: 0.5
-  },
-  cardTitle: {
-    color: "#FFFFFF",
-    fontSize: 18,
-    fontWeight: "bold"
-  },
-  cardSubtitle: {
-    color: "#8CAFC5"
-  },
-  exploreButton: {
-    backgroundColor: "#F77E32",
-    padding: 15,
-    borderRadius: 10,
-    marginTop: 20,
-    alignItems: "center"
-  },
-  exploreButtonText: {
-    color: "#061A1E",
-    fontWeight: "bold"
-  },
-  recommendedCard: {
-    borderWidth: 1,
-    borderColor: "#8CAFC5",
-    borderRadius: 10,
-    padding: 10
   }
 });

@@ -1,15 +1,7 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TextInput,
-  TouchableOpacity,
-  StatusBar,
-  ImageBackground
-} from "react-native";
+import { View, Text, StyleSheet, TextInput, StatusBar } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Card } from "react-native-paper";
+
+import ConcertList from "../components/homeScreen/ConcertList";
 
 const tameImpalaImage = require("../assets/tameimpala.jpg");
 const billieeilishImage = require("../assets/billieeilish.jpg");
@@ -55,27 +47,7 @@ export default function HomeScreen() {
 
         <Text style={styles.sectionTitle}>Recommended for You</Text>
 
-        <View style={styles.recommendedCard}>
-          <ScrollView horizontal={true}>
-            {recommendedEvents.map((event) => (
-              <Card key={event.id} style={styles.card} onPress={() => {}}>
-                <ImageBackground
-                  source={event.img}
-                  imageStyle={styles.cardBackgroundImage}
-                >
-                  <Card.Content style={styles.cardContent}>
-                    <Text style={styles.cardTitle}>{event.artist}</Text>
-                    <Text style={styles.cardSubtitle}>{event.city}</Text>
-                    <Text style={styles.cardSubtitle}>{event.date}</Text>
-                  </Card.Content>
-                </ImageBackground>
-              </Card>
-            ))}
-          </ScrollView>
-          <TouchableOpacity style={styles.exploreButton} onPress={() => {}}>
-            <Text style={styles.exploreButtonText}>Explore All Events</Text>
-          </TouchableOpacity>
-        </View>
+        <ConcertList concertList={recommendedEvents} />
       </SafeAreaView>
     </View>
   );
@@ -152,13 +124,5 @@ const styles = StyleSheet.create({
     borderColor: "#8CAFC5",
     borderRadius: 10,
     padding: 10
-  },
-  eventImg: {
-    borderWidth: 1,
-    borderColor: "white",
-    borderRadius: 5,
-    padding: 50,
-    alignItems: "center",
-    marginTop: 5
   }
 });

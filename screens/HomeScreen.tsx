@@ -1,13 +1,12 @@
-// screens/HomeScreen.tsx
 import {
   View,
   Text,
   StyleSheet,
   ScrollView,
   TextInput,
-  TouchableOpacity
+  TouchableOpacity,
+  StatusBar
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Card } from "react-native-paper";
 
@@ -19,18 +18,14 @@ const recommendedEvents = [
 
 export default function HomeScreen() {
   return (
-    <LinearGradient
-      colors={["#2A2232", "#e0b0a0", "#150E17"]}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 0, y: 1 }}
-      style={styles.gradient}
-    >
+    <View style={styles.background}>
+      <StatusBar barStyle="light-content" backgroundColor="#061A1E" />
       <SafeAreaView style={styles.container}>
         <Text style={styles.greeting}> Welcome Username</Text>
 
         <TextInput
           placeholder="Search artist, city, or date..."
-          placeholderTextColor="#f8a8d3"
+          placeholderTextColor="#8CAFC5"
           style={styles.searchInput}
         />
 
@@ -55,64 +50,65 @@ export default function HomeScreen() {
           </ScrollView>
         </View>
       </SafeAreaView>
-    </LinearGradient>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  gradient: {
-    flex: 1
+  background: {
+    flex: 1,
+    backgroundColor: "#061A1E"
   },
   container: {
     flex: 1,
     padding: 20
   },
   greeting: {
-    color: "#f8a8d3",
+    color: "#FFFFFF",
     fontSize: 26,
     fontWeight: "bold",
     marginBottom: 20
   },
   searchInput: {
-    backgroundColor: "#3a2c39",
+    backgroundColor: "#13353C",
     borderRadius: 10,
     padding: 14,
-    color: "#f8a8d3",
+    color: "#FFFFFF",
     marginBottom: 20
   },
   sectionTitle: {
     fontSize: 18,
-    color: "#f8a8d3",
+    color: "#8CAFC5",
     marginBottom: 10,
     fontWeight: "600"
   },
   card: {
-    backgroundColor: "#2a2232",
+    backgroundColor: "#1A3C47",
     marginBottom: 15,
     borderRadius: 10
   },
   cardTitle: {
-    color: "#f8a8d3",
+    color: "#FFFFFF",
     fontSize: 18,
     fontWeight: "bold"
   },
   cardSubtitle: {
-    color: "#ccc"
+    color: "#8CAFC5"
   },
   exploreButton: {
-    backgroundColor: "#f8a8d3",
+    backgroundColor: "#F77E32",
     padding: 15,
     borderRadius: 10,
     marginTop: 20,
     alignItems: "center"
   },
   exploreButtonText: {
-    color: "#1c1822",
+    color: "#061A1E",
     fontWeight: "bold"
   },
   recommendedCard: {
     borderWidth: 1,
-    borderColor: "white",
+    borderColor: "#8CAFC5",
     borderRadius: 10,
     padding: 10
   }

@@ -6,33 +6,27 @@ import {
   Platform
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { LinearGradient } from "expo-linear-gradient";
 import SigninForm from "../components/forms/SigninForm";
 import { Snackbar } from "react-native-paper";
 import { useState } from "react";
+import { StatusBar } from "react-native";
 
 export default function SigninScreen() {
   const [isSnackbarVisible, setIsSnackbarVisible] = useState<boolean>(false);
   const onDismissSnackBar = () => setIsSnackbarVisible(false);
 
   return (
-    <LinearGradient
-      colors={["#2A2232", "#e0b0a0", "#150E17"]}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 0, y: 1 }}
-      style={styles.gradient}
-    >
-      <SafeAreaView style={{ flex: 1 }}>
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <KeyboardAvoidingView
-            behavior={Platform.OS === "ios" ? "padding" : "height"}
-            keyboardVerticalOffset={Platform.OS === "ios" ? 60 : 0}
-            style={styles.container}
-          >
-            <SigninForm setIsSnackbarVisible={setIsSnackbarVisible} />
-          </KeyboardAvoidingView>
-        </TouchableWithoutFeedback>
-      </SafeAreaView>
+    <SafeAreaView style={{ flex: 1 }}>
+      <StatusBar backgroundColor="#061A1E" barStyle="light-content" />
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          keyboardVerticalOffset={Platform.OS === "ios" ? 60 : 0}
+          style={styles.container}
+        >
+          <SigninForm setIsSnackbarVisible={setIsSnackbarVisible} />
+        </KeyboardAvoidingView>
+      </TouchableWithoutFeedback>
       <Snackbar
         visible={isSnackbarVisible}
         onDismiss={onDismissSnackBar}
@@ -42,14 +36,14 @@ export default function SigninScreen() {
       >
         Wrong Credentials
       </Snackbar>
-    </LinearGradient>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    //backgroundColor: "#1c1822",
+    backgroundColor: "#061A1E",
     alignItems: "center",
     justifyContent: "center",
     padding: 20

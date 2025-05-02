@@ -1,7 +1,29 @@
-import { View } from "react-native";
+import { useState } from "react";
+import { TouchableOpacity, View } from "react-native";
 import { Icon } from "react-native-paper";
 
 export default function BottomNavBar() {
+  const [currentScreen, setCurrentScreen] = useState("home");
+
+  const listOfButtons = [
+    {
+      icon: "home-outline",
+      screen: "home"
+    },
+    {
+      icon: "heart-outline",
+      screen: "heart"
+    },
+    {
+      icon: "magnify",
+      screen: "explore"
+    },
+    {
+      icon: "cog-outline",
+      screen: "settings"
+    }
+  ];
+
   return (
     <View
       style={{
@@ -17,26 +39,26 @@ export default function BottomNavBar() {
           justifyContent: "space-around"
         }}
       >
-        <View
-          style={{ backgroundColor: "#F77E32", borderRadius: 15, padding: 5 }}
-        >
-          <Icon color="#FFF" size={30} source={"home-outline"} />
-        </View>
-        <View
-          style={{ backgroundColor: "#13353C", borderRadius: 15, padding: 5 }}
-        >
-          <Icon color="#8CAFC5" size={30} source={"heart-outline"} />
-        </View>
-        <View
-          style={{ backgroundColor: "#13353C", borderRadius: 15, padding: 5 }}
-        >
-          <Icon color="#8CAFC5" size={30} source={"magnify"} />
-        </View>
-        <View
-          style={{ backgroundColor: "#13353C", borderRadius: 15, padding: 5 }}
-        >
-          <Icon color="#8CAFC5" size={30} source={"cog-outline"} />
-        </View>
+        {listOfButtons.map((element, index) => (
+          <TouchableOpacity
+            key={index}
+            onPress={() => {
+              setCurrentScreen(element.screen);
+            }}
+            style={{
+              backgroundColor:
+                currentScreen === element.screen ? "#F77E32" : "#13353C",
+              borderRadius: 15,
+              padding: 5
+            }}
+          >
+            <Icon
+              color={currentScreen === element.screen ? "#FFF" : "#8CAFC5"}
+              size={30}
+              source={element.icon}
+            />
+          </TouchableOpacity>
+        ))}
       </View>
     </View>
   );

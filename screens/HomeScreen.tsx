@@ -6,16 +6,35 @@ import { useEffect, useState } from "react";
 import { searchConcertsNearYou } from "../api/APIMethods";
 import { mapToConcertCard } from "../utils/eventMapper";
 import { IConcertCard } from "../types/IConcertCard";
+import { useUserLocation } from "../hooks/useUserLocation";
+import * as Location from "expo-location";
 
 export default function HomeScreen() {
   const [recommendedEvents, setRecommendedEvents] = useState<IConcertCard[]>(
     []
   );
+  const { location, errorMsg } = useUserLocation();
+  const [currentCity, setCurrentCity] = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchEvents() {
       try {
-        const events = await searchConcertsNearYou("Stockholm");
+        let city = "stockholm";
+
+        if (location) {
+          const reverseGeocoded = await Location.reverseGeocodeAsync({
+            latitude: location.coords.latitude,
+            longitude: location.coords.longitude
+          });
+
+          if (reverseGeocoded.length > 0 && reverseGeocoded[0].city) {
+            city = reverseGeocoded[0].city;
+          }
+        }
+
+        setCurrentCity(city);
+
+        const events = await searchConcertsNearYou(city);
         setRecommendedEvents(events.map(mapToConcertCard));
       } catch (error) {
         console.error("Failed to fetch concerts", error);
@@ -23,7 +42,7 @@ export default function HomeScreen() {
     }
 
     fetchEvents();
-  }, []);
+  }, [location]);
 
   return (
     <View style={styles.background}>
@@ -38,7 +57,7 @@ export default function HomeScreen() {
           style={styles.searchInput}
         />
 
-        <Text style={styles.sectionTitle}>Artist in town</Text>
+        <Text style={styles.sectionTitle}>Concerts near {currentCity}</Text>
 
         <ConcertList concertList={recommendedEvents} />
       </SafeAreaView>

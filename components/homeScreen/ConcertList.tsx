@@ -7,17 +7,12 @@ import {
   ImageBackground
 } from "react-native";
 import { Card } from "react-native-paper";
+import { IConcertCard } from "../../types/IConcertCard";
 
 export default function ConcertList({
   concertList
 }: {
-  concertList: {
-    id: string;
-    artist: string;
-    city: string;
-    date: string;
-    img: any;
-  }[];
+  concertList: IConcertCard[];
 }) {
   return (
     <View style={styles.recommendedCard}>
@@ -26,6 +21,7 @@ export default function ConcertList({
           <Card key={event.id} style={styles.card} onPress={() => {}}>
             <ImageBackground
               source={event.img}
+              imageStyle={{ opacity: 0.5 }}
               style={styles.cardBackgroundImage}
               resizeMode="stretch"
             >
@@ -64,7 +60,6 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   cardBackgroundImage: {
-    opacity: 0.5,
     width: "100%",
     height: "100%",
     justifyContent: "center",
@@ -76,7 +71,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold"
   },
   cardSubtitle: {
-    color: "#8CAFC5"
+    color: "#A7BBC7"
   },
   exploreButton: {
     backgroundColor: "#F77E32",

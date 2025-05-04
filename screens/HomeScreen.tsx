@@ -1,38 +1,30 @@
 import { View, Text, StyleSheet, TextInput, StatusBar } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
 import ConcertList from "../components/homeScreen/ConcertList";
 import BottomNavBar from "../components/nav-bar/BottomNavBar";
-
-const tameImpalaImage = require("../assets/tameimpala.jpg");
-const billieeilishImage = require("../assets/billieeilish.jpg");
-const thestrokesImage = require("../assets/thestrokes.jpg");
-
-const recommendedEvents = [
-  {
-    id: "1",
-    artist: "Tame Impala",
-    city: "Stockholm",
-    date: "2025-06-12",
-    img: tameImpalaImage
-  },
-  {
-    id: "2",
-    artist: "Billie Eilish",
-    city: "Gothenburg",
-    date: "2025-07-05",
-    img: billieeilishImage
-  },
-  {
-    id: "3",
-    artist: "The Strokes",
-    city: "Copenhagen",
-    date: "2025-08-20",
-    img: thestrokesImage
-  }
-];
+import { useEffect, useState } from "react";
+import { searchConcertsNearYou } from "../api/APIMethods";
+import { mapToConcertCard } from "../utils/eventMapper";
+import { IConcertCard } from "../types/IConcertCard";
 
 export default function HomeScreen() {
+  const [recommendedEvents, setRecommendedEvents] = useState<IConcertCard[]>(
+    []
+  );
+
+  useEffect(() => {
+    async function fetchEvents() {
+      try {
+        const events = await searchConcertsNearYou("Stockholm");
+        setRecommendedEvents(events.map(mapToConcertCard));
+      } catch (error) {
+        console.error("Failed to fetch concerts", error);
+      }
+    }
+
+    fetchEvents();
+  }, []);
+
   return (
     <View style={styles.background}>
       <StatusBar barStyle="light-content" backgroundColor="#061A1E" />
@@ -46,7 +38,7 @@ export default function HomeScreen() {
           style={styles.searchInput}
         />
 
-        <Text style={styles.sectionTitle}>Recommended for You</Text>
+        <Text style={styles.sectionTitle}>Artist in town</Text>
 
         <ConcertList concertList={recommendedEvents} />
       </SafeAreaView>

@@ -26,7 +26,8 @@ export default function ConcertList({
           <Card key={event.id} style={styles.card} onPress={() => {}}>
             <ImageBackground
               source={event.img}
-              imageStyle={styles.cardBackgroundImage}
+              style={styles.cardBackgroundImage}
+              resizeMode="stretch"
             >
               <Card.Content style={styles.cardContent}>
                 <Text style={styles.cardTitle}>{event.artist}</Text>
@@ -48,21 +49,26 @@ const styles = StyleSheet.create({
   recommendedCard: {
     borderWidth: 1,
     borderColor: "#8CAFC5",
-    borderRadius: 10,
-    padding: 10
+    borderRadius: 10
   },
   card: {
     backgroundColor: "#1A3C47",
     margin: 15,
     borderRadius: 10,
-    overflow: "hidden"
+    overflow: "hidden",
+    width: 150,
+    height: 150
   },
   cardContent: {
-    padding: 50,
-    alignItems: "center"
+    alignContent: "center",
+    justifyContent: "center"
   },
   cardBackgroundImage: {
-    opacity: 0.5
+    opacity: 0.5,
+    width: "100%",
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center"
   },
   cardTitle: {
     color: "#FFFFFF",
@@ -77,7 +83,8 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 10,
     marginTop: 20,
-    alignItems: "center"
+    alignItems: "center",
+    margin: 5
   },
   exploreButtonText: {
     color: "#061A1E",

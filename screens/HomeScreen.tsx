@@ -1,4 +1,11 @@
-import { View, Text, StyleSheet, TextInput, StatusBar } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  StatusBar,
+  Alert
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ConcertList from "../components/homeScreen/ConcertList";
 import BottomNavBar from "../components/nav-bar/BottomNavBar";
@@ -34,11 +41,14 @@ export default function HomeScreen() {
 
         const events = await searchConcertsNearYou(city, 10);
         setNearEventList(events._embedded?.events.map(mapToConcertCard) ?? []);
-      } catch (error) {
-        console.error("Failed to fetch concerts", error);
+      } catch {
+        Alert.alert(
+          "Error",
+          "Failed to fetch concerts. Please try again later.",
+          [{ text: "OK" }]
+        );
       }
     }
-
     fetchEvents();
   }, [location]);
 

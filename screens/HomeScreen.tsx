@@ -13,7 +13,7 @@ export default function HomeScreen() {
   const [recommendedEvents, setRecommendedEvents] = useState<IConcertCard[]>(
     []
   );
-  const { location, errorMsg } = useUserLocation();
+  const { location } = useUserLocation();
   const [currentCity, setCurrentCity] = useState<string | null>(null);
 
   useEffect(() => {

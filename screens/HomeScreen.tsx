@@ -10,9 +10,7 @@ import { useUserLocation } from "../hooks/useUserLocation";
 import * as Location from "expo-location";
 
 export default function HomeScreen() {
-  const [recommendedEvents, setRecommendedEvents] = useState<IConcertCard[]>(
-    []
-  );
+  const [nearEventList, setNearEventList] = useState<IConcertCard[]>([]);
   const { location } = useUserLocation();
   const [currentCity, setCurrentCity] = useState<string | null>(null);
 
@@ -35,7 +33,7 @@ export default function HomeScreen() {
         setCurrentCity(city);
 
         const events = await searchConcertsNearYou(city);
-        setRecommendedEvents(events.map(mapToConcertCard));
+        setNearEventList(events.map(mapToConcertCard));
       } catch (error) {
         console.error("Failed to fetch concerts", error);
       }
@@ -59,7 +57,7 @@ export default function HomeScreen() {
 
         <Text style={styles.sectionTitle}>Concerts near {currentCity}</Text>
 
-        <ConcertList concertList={recommendedEvents} />
+        <ConcertList concertList={nearEventList} />
       </SafeAreaView>
       <BottomNavBar />
     </View>

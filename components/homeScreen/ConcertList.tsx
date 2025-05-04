@@ -7,17 +7,12 @@ import {
   ImageBackground
 } from "react-native";
 import { Card } from "react-native-paper";
+import { IConcertCard } from "../../types/IConcertCard";
 
 export default function ConcertList({
   concertList
 }: {
-  concertList: {
-    id: string;
-    artist: string;
-    city: string;
-    date: string;
-    img: any;
-  }[];
+  concertList: IConcertCard[];
 }) {
   return (
     <View style={styles.recommendedCard}>

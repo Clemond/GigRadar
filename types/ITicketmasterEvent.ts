@@ -26,3 +26,9 @@ export interface ITicketmasterEvent {
     }[];
   };
 }
+
+export interface ITicketmasterSearchResponse {
+  _embedded?: {
+    events: ITicketmasterEvent[];
+  };
+}

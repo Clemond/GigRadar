@@ -32,8 +32,8 @@ export default function HomeScreen() {
 
         setCurrentCity(city);
 
-        const events = await searchConcertsNearYou(city);
-        setNearEventList(events.map(mapToConcertCard));
+        const events = await searchConcertsNearYou(city, 10);
+        setNearEventList(events._embedded?.events.map(mapToConcertCard) ?? []);
       } catch (error) {
         console.error("Failed to fetch concerts", error);
       }

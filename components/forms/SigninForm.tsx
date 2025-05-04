@@ -33,7 +33,7 @@ export default function SigninForm({
 
   return (
     <View style={styles.card}>
-      <Text style={styles.header}>Welcome Back</Text>
+      <Text style={styles.headerText}>Welcome Back</Text>
       <TextInput
         style={styles.input}
         placeholder="Email"
@@ -56,18 +56,15 @@ export default function SigninForm({
       />
 
       <TouchableOpacity>
-        <Text style={styles.forgotPassword}>Forgot Password?</Text>
+        <Text style={styles.smallText}>Forgot Password?</Text>
       </TouchableOpacity>
 
-      <Text style={styles.orText}>OR</Text>
-
       <TouchableOpacity>
-        <Text style={styles.createAccount}>Create an account?</Text>
+        <Text style={styles.smallText}>Create an account?</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
         <Text style={styles.buttonText}>
-          {" "}
           {loading ? (
             <ActivityIndicator animating={true} color="#2a2232" />
           ) : (
@@ -81,21 +78,21 @@ export default function SigninForm({
 
 const styles = StyleSheet.create({
   card: {
+    alignItems: "center",
     width: "100%",
     backgroundColor: "#0C2D33",
-    borderRadius: 20,
+    borderRadius: 10,
     padding: 30,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 10 },
     shadowOpacity: 0.3,
     shadowRadius: 20,
-    elevation: 10,
-    alignItems: "center"
+    elevation: 10
   },
-  header: {
+  headerText: {
     color: "#FFFFFF",
     fontSize: 32,
-    fontWeight: "bold",
+    fontWeight: "thin",
     marginBottom: 30
   },
   input: {
@@ -107,14 +104,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     fontSize: 16
   },
-  forgotPassword: {
-    // ! Change so theres one style for this and the one bellow!
-    color: "#8CAFC5",
-    fontSize: 14,
-    alignSelf: "flex-end",
-    marginVertical: 5
-  },
-  createAccount: {
+  smallText: {
     color: "#8CAFC5",
     fontSize: 14,
     alignSelf: "flex-end",
@@ -122,7 +112,7 @@ const styles = StyleSheet.create({
   },
   loginButton: {
     width: "100%",
-    padding: 18,
+    padding: 15,
     backgroundColor: "#F77E32",
     borderRadius: 10,
     alignItems: "center",
@@ -132,10 +122,5 @@ const styles = StyleSheet.create({
     color: "#061A1E",
     fontSize: 18,
     fontWeight: "bold"
-  },
-  orText: {
-    color: "#8CAFC5",
-    marginVertical: 1,
-    fontSize: 10
   }
 });

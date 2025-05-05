@@ -10,21 +10,20 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import ConcertList from "../components/homeScreen/ConcertList";
 import BottomNavBar from "../components/nav-bar/BottomNavBar";
 import { useEffect, useState } from "react";
-import { fetchUserData, searchConcertsNearYou } from "../api/APIMethods";
+import { searchConcertsNearYou } from "../api/APIMethods";
 import { mapToConcertCard } from "../utils/eventMapper";
 import { IConcertCard } from "../types/IConcertCard";
 import { useUserLocation } from "../hooks/useUserLocation";
 import * as Location from "expo-location";
 import { getAuth } from "firebase/auth";
+import { IUserData } from "../types/IUserData";
+import { fetchUserData } from "../firebase/firebaseFirestore";
 
 export default function HomeScreen() {
   const [nearEventList, setNearEventList] = useState<IConcertCard[]>([]);
   const [currentCity, setCurrentCity] = useState<string | null>(null);
   const { location } = useUserLocation();
-  const [userData, setUserData] = useState<{
-    firstname: string;
-    surname: string;
-  } | null>(null);
+  const [userData, setUserData] = useState<IUserData | null>(null);
 
   useEffect(() => {
     const uid = getAuth().currentUser?.uid;

@@ -3,7 +3,8 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   KeyboardAvoidingView,
-  Platform
+  Platform,
+  Image
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Snackbar } from "react-native-paper";
@@ -15,8 +16,6 @@ export default function CreateAccountScreen() {
   const [isSnackbarVisible, setIsSnackbarVisible] = useState<boolean>(false);
   const onDismissSnackBar = () => setIsSnackbarVisible(false);
 
-  //! Check if there are things to remove from this screen since ints create an account screen
-
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <StatusBar backgroundColor="#061A1E" barStyle="light-content" />
@@ -26,6 +25,11 @@ export default function CreateAccountScreen() {
           keyboardVerticalOffset={Platform.OS === "ios" ? 60 : 0}
           style={styles.container}
         >
+          <Image
+            source={require("../assets/gigradar-icon.png")}
+            style={styles.logo}
+            resizeMode="contain"
+          />
           <CreateAccountForm setIsSnackbarVisible={setIsSnackbarVisible} />
         </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
@@ -49,5 +53,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     padding: 20
+  },
+  logo: {
+    width: 60,
+    height: 60,
+    marginBottom: 50
   }
 });

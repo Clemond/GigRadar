@@ -3,7 +3,8 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   KeyboardAvoidingView,
-  Platform
+  Platform,
+  Image
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import SigninForm from "../components/forms/SigninForm";
@@ -24,6 +25,11 @@ export default function SigninScreen() {
           keyboardVerticalOffset={Platform.OS === "ios" ? 60 : 0}
           style={styles.container}
         >
+          <Image
+            source={require("../assets/gigradar-icon.png")}
+            style={styles.logo}
+            resizeMode="contain"
+          />
           <SigninForm setIsSnackbarVisible={setIsSnackbarVisible} />
         </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
@@ -44,8 +50,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#061A1E",
-    alignItems: "center",
     justifyContent: "center",
+    alignItems: "center",
     padding: 20
+  },
+  logo: {
+    width: 60,
+    height: 60,
+    marginBottom: 50
   }
 });

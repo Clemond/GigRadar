@@ -23,7 +23,7 @@ export default function ConcertList({
               source={event.img}
               imageStyle={{ opacity: 0.5 }}
               style={styles.cardBackgroundImage}
-              resizeMode="stretch"
+              resizeMode="cover"
             >
               <Card.Content style={styles.cardContent}>
                 <Text style={styles.cardTitle}>{event.artist}</Text>

@@ -11,8 +11,9 @@ import {
   Keyboard
 } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
+import { useSignup } from "../../hooks/useSignup";
 
-export default function SigninForm({
+export default function CreateAccountForm({
   setIsSnackbarVisible
 }: {
   setIsSnackbarVisible: (boolean: boolean) => void;
@@ -20,20 +21,45 @@ export default function SigninForm({
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const { signIn, loading } = useSignin();
+  const [firstname, setFirstname] = useState<string>("");
+  const [surname, setSurname] = useState<string>("");
+  const { loading } = useSignin();
+  const { signUp } = useSignup();
 
-  async function handleLogin() {
+  async function handleSignup() {
     Keyboard.dismiss();
-    const user = await signIn(email, password);
-    if (!user) setIsSnackbarVisible(true);
-    if (user) {
-      navigation.navigate("HomeScreen");
+
+    const user = await signUp({ email, password, firstname, surname });
+    if (!user) {
+      setIsSnackbarVisible(true);
+      return;
     }
+
+    navigation.navigate("HomeScreen");
   }
 
   return (
     <View style={styles.card}>
-      <Text style={styles.headerText}>Welcome Back</Text>
+      <Text style={styles.headerText}>Sign up</Text>
+
+      <TextInput
+        style={styles.input}
+        placeholder="Firstname"
+        placeholderTextColor="#8CAFC5"
+        value={firstname}
+        onChangeText={setFirstname}
+        contextMenuHidden={true}
+        autoCapitalize="none"
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Surname"
+        placeholderTextColor="#8CAFC5"
+        value={surname}
+        onChangeText={setSurname}
+        contextMenuHidden={true}
+        autoCapitalize="none"
+      />
       <TextInput
         style={styles.input}
         placeholder="Email"
@@ -43,7 +69,6 @@ export default function SigninForm({
         contextMenuHidden={true}
         autoCapitalize="none"
       />
-
       <TextInput
         style={styles.input}
         placeholder="Password"
@@ -55,22 +80,16 @@ export default function SigninForm({
         autoCapitalize="none"
       />
 
-      <TouchableOpacity>
-        <Text style={styles.smallText}>Forgot Password?</Text>
+      <TouchableOpacity onPress={() => navigation.navigate("SigninScreen")}>
+        <Text style={styles.smallText}>Already have an account?</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity
-        onPress={() => navigation.navigate("CreateAccountScreen")}
-      >
-        <Text style={styles.smallText}>Create an account?</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
+      <TouchableOpacity style={styles.loginButton} onPress={handleSignup}>
         <Text style={styles.buttonText}>
           {loading ? (
             <ActivityIndicator animating={true} color="#2a2232" />
           ) : (
-            "Login"
+            "Create account"
           )}
         </Text>
       </TouchableOpacity>

@@ -33,7 +33,7 @@ export default function SigninForm({
 
   return (
     <View style={styles.card}>
-      <Text style={styles.headerText}>Welcome Back</Text>
+      <Text style={styles.headerText}>Sign up</Text>
       <TextInput
         style={styles.input}
         placeholder="Email"
@@ -59,9 +59,7 @@ export default function SigninForm({
         <Text style={styles.smallText}>Forgot Password?</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity
-        onPress={() => navigation.navigate("CreateAccountScreen")}
-      >
+      <TouchableOpacity>
         <Text style={styles.smallText}>Create an account?</Text>
       </TouchableOpacity>
 

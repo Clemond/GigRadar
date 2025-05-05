@@ -4,20 +4,20 @@
     "slug": "gig-radar",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/gigradar-logo.png",
+    "icon": "./assets/gigradar-android-icon.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/splash-icon.png",
+      "image": "./assets/gigradar-splash-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#061A1E"
     },
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/gigradar-android-icon.png",
         "backgroundColor": "#ffffff"
       }
     },

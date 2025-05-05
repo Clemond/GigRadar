@@ -53,7 +53,13 @@ export default function HomeScreen() {
         setCurrentCity(city);
 
         const events = await searchConcertsNearYou(city, 10);
-        setNearEventList(events._embedded?.events.map(mapToConcertCard) ?? []);
+        const mappedEvents =
+          events._embedded?.events.map(mapToConcertCard) ?? [];
+        mappedEvents.sort(
+          (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+        );
+
+        setNearEventList(mappedEvents);
       } catch {
         Alert.alert(
           "Error",

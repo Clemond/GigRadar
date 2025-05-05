@@ -15,11 +15,24 @@ import { mapToConcertCard } from "../utils/eventMapper";
 import { IConcertCard } from "../types/IConcertCard";
 import { useUserLocation } from "../hooks/useUserLocation";
 import * as Location from "expo-location";
+import { getAuth } from "firebase/auth";
+import { IUserData } from "../types/IUserData";
+import { fetchUserData } from "../firebase/firebaseFirestore";
 
 export default function HomeScreen() {
   const [nearEventList, setNearEventList] = useState<IConcertCard[]>([]);
-  const { location } = useUserLocation();
   const [currentCity, setCurrentCity] = useState<string | null>(null);
+  const { location } = useUserLocation();
+  const [userData, setUserData] = useState<IUserData | null>(null);
+
+  useEffect(() => {
+    const uid = getAuth().currentUser?.uid;
+    if (uid) {
+      fetchUserData(uid).then((data) => {
+        if (data) setUserData(data as any);
+      });
+    }
+  }, []);
 
   useEffect(() => {
     async function fetchEvents() {
@@ -56,7 +69,7 @@ export default function HomeScreen() {
     <View style={styles.background}>
       <StatusBar barStyle="light-content" backgroundColor="#061A1E" />
       <SafeAreaView style={styles.container}>
-        <Text style={styles.greetingTitle}>Hello, Username</Text>
+        <Text style={styles.greetingTitle}>Hello, {userData?.firstname}</Text>
         <Text style={styles.greeting}>Good to see you again!</Text>
 
         <TextInput

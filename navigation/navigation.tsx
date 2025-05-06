@@ -8,7 +8,12 @@ export default function RootStack() {
   const Stack = createNativeStackNavigator<RootStackParamList>();
 
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+        contentStyle: { backgroundColor: "#061A1E" }
+      }}
+    >
       <Stack.Screen name="SigninScreen" component={SigninScreen} />
       <Stack.Screen name="HomeScreen" component={HomeScreen} />
       <Stack.Screen

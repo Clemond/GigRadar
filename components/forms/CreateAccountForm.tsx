@@ -26,8 +26,7 @@ export default function CreateAccountForm({
   const [password, setPassword] = useState<string>("");
   const [firstname, setFirstname] = useState<string>("");
   const [surname, setSurname] = useState<string>("");
-  const { loading } = useSignin();
-  const { signUp } = useSignup();
+  const { signUp, loading } = useSignup();
 
   async function handleSignup() {
     Keyboard.dismiss();

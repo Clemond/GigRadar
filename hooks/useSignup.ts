@@ -36,5 +36,5 @@ export function useSignup() {
     }
   };
 
-  return { signUp };
+  return { signUp, loading };
 }

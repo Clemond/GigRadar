@@ -53,7 +53,6 @@ export default function SigninScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#061A1E",
     justifyContent: "center",
     alignItems: "center",
     padding: 20

@@ -15,24 +15,13 @@ import { mapToConcertCard } from "../utils/eventMapper";
 import { IConcertCard } from "../types/IConcertCard";
 import { useUserLocation } from "../hooks/useUserLocation";
 import * as Location from "expo-location";
-import { getAuth } from "firebase/auth";
-import { IUserData } from "../types/IUserData";
-import { fetchUserData } from "../firebase/firebaseFirestore";
+import { useUserStore } from "../stores/useUserStore";
 
 export default function HomeScreen() {
   const [nearEventList, setNearEventList] = useState<IConcertCard[]>([]);
   const [currentCity, setCurrentCity] = useState<string | null>(null);
   const { location } = useUserLocation();
-  const [userData, setUserData] = useState<IUserData | null>(null);
-
-  useEffect(() => {
-    const uid = getAuth().currentUser?.uid;
-    if (uid) {
-      fetchUserData(uid).then((data) => {
-        if (data) setUserData(data as any);
-      });
-    }
-  }, []);
+  const { userData } = useUserStore();
 
   useEffect(() => {
     async function fetchEvents() {

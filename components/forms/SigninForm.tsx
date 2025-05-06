@@ -11,6 +11,10 @@ import {
   Keyboard
 } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
+import { useUserStore } from "../../stores/useUserStore";
+import { fetchUserData } from "../../firebase/firebaseFirestore";
+import { getAuth } from "firebase/auth";
+import { IUserData } from "../../types/IUserData";
 
 export default function SigninForm({
   setIsSnackbarVisible
@@ -21,11 +25,24 @@ export default function SigninForm({
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const { signIn, loading } = useSignin();
+  const { setUserData } = useUserStore();
 
   async function handleLogin() {
     Keyboard.dismiss();
     const user = await signIn(email, password);
-    if (!user) setIsSnackbarVisible(true);
+
+    if (!user) {
+      setIsSnackbarVisible(true);
+      return;
+    }
+    const uid = getAuth().currentUser?.uid;
+    if (uid) {
+      const userData = await fetchUserData(uid);
+      if (userData) {
+        setUserData(userData as IUserData);
+      }
+    }
+
     if (user) {
       navigation.navigate("HomeScreen");
     }

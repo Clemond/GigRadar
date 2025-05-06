@@ -12,6 +12,10 @@ import {
 } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 import { useSignup } from "../../hooks/useSignup";
+import { useUserStore } from "../../stores/useUserStore";
+import { getAuth } from "firebase/auth";
+import { fetchUserData } from "../../firebase/firebaseFirestore";
+import { IUserData } from "../../types/IUserData";
 
 export default function CreateAccountForm({
   setIsSnackbarVisible
@@ -25,17 +29,28 @@ export default function CreateAccountForm({
   const [surname, setSurname] = useState<string>("");
   const { loading } = useSignin();
   const { signUp } = useSignup();
+  const { setUserData } = useUserStore();
 
   async function handleSignup() {
     Keyboard.dismiss();
-
     const user = await signUp({ email, password, firstname, surname });
+
     if (!user) {
       setIsSnackbarVisible(true);
       return;
     }
 
-    navigation.navigate("HomeScreen");
+    const uid = getAuth().currentUser?.uid;
+    if (uid) {
+      const userData = await fetchUserData(uid);
+      if (userData) {
+        setUserData(userData as IUserData);
+      }
+    }
+
+    if (user) {
+      navigation.navigate("HomeScreen");
+    }
   }
 
   return (

@@ -44,7 +44,7 @@ export default function SigninScreen() {
           label: "Close"
         }}
       >
-        Wrong Credentials
+        {snackbarMsg}
       </Snackbar>
     </SafeAreaView>
   );

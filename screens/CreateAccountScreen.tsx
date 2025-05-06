@@ -53,7 +53,6 @@ export default function CreateAccountScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#061A1E",
     alignItems: "center",
     justifyContent: "center",
     padding: 20

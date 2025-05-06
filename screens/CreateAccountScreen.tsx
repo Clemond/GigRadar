@@ -15,6 +15,7 @@ import CreateAccountForm from "../components/forms/CreateAccountForm";
 export default function CreateAccountScreen() {
   const [isSnackbarVisible, setIsSnackbarVisible] = useState<boolean>(false);
   const onDismissSnackBar = () => setIsSnackbarVisible(false);
+  const [snackbarMsg, setSnackbarMsg] = useState<string | null>(null);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -30,7 +31,10 @@ export default function CreateAccountScreen() {
             style={styles.logo}
             resizeMode="contain"
           />
-          <CreateAccountForm setIsSnackbarVisible={setIsSnackbarVisible} />
+          <CreateAccountForm
+            setSnackbarMsg={setSnackbarMsg}
+            setIsSnackbarVisible={setIsSnackbarVisible}
+          />
         </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
       <Snackbar
@@ -40,7 +44,7 @@ export default function CreateAccountScreen() {
           label: "Close"
         }}
       >
-        Wrong Credentials
+        {snackbarMsg}
       </Snackbar>
     </SafeAreaView>
   );

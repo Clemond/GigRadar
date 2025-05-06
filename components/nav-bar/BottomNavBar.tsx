@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { TouchableOpacity, View } from "react-native";
+import { TouchableOpacity, View, StyleSheet } from "react-native";
 import { Icon } from "react-native-paper";
 
 export default function BottomNavBar() {
@@ -25,41 +25,47 @@ export default function BottomNavBar() {
   ];
 
   return (
-    <View
-      style={{
-        paddingHorizontal: 15,
-        paddingBottom: 10,
-        borderTopRightRadius: 10,
-        borderTopLeftRadius: 10
-      }}
-    >
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-around"
-        }}
-      >
-        {listOfButtons.map((element, index) => (
-          <TouchableOpacity
-            key={index}
-            onPress={() => {
-              setCurrentScreen(element.screen);
-            }}
-            style={{
-              backgroundColor:
-                currentScreen === element.screen ? "#F77E32" : "#13353C",
-              borderRadius: 15,
-              padding: 5
-            }}
-          >
-            <Icon
-              color={currentScreen === element.screen ? "#FFF" : "#8CAFC5"}
-              size={30}
-              source={element.icon}
-            />
-          </TouchableOpacity>
-        ))}
-      </View>
+    <View style={styles.container}>
+      {listOfButtons.map((element, index) => (
+        <TouchableOpacity
+          key={index}
+          onPress={() => {
+            setCurrentScreen(element.screen);
+          }}
+          style={
+            currentScreen === element.screen
+              ? styles.activeButton
+              : styles.button
+          }
+        >
+          <Icon
+            color={currentScreen === element.screen ? "#FFF" : "#8CAFC5"}
+            size={30}
+            source={element.icon}
+          />
+        </TouchableOpacity>
+      ))}
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    paddingHorizontal: 15,
+    paddingBottom: 10,
+    borderTopRightRadius: 10,
+    borderTopLeftRadius: 10,
+    flexDirection: "row",
+    justifyContent: "space-around"
+  },
+  button: {
+    backgroundColor: "#13353C",
+    borderRadius: 15,
+    padding: 5
+  },
+  activeButton: {
+    backgroundColor: "#F77E32",
+    borderRadius: 15,
+    padding: 5
+  }
+});

@@ -1,7 +1,6 @@
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "../../types/navigation.types";
 import { useState } from "react";
-import { useSignin } from "../../hooks/useSignin";
 import {
   TextInput,
   View,

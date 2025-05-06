@@ -15,8 +15,10 @@ import { useSignup } from "../../hooks/useSignup";
 import { setUserDataFromFirebase } from "../../utils/setUserDataFromFirebase";
 
 export default function CreateAccountForm({
+  setSnackbarMsg,
   setIsSnackbarVisible
 }: {
+  setSnackbarMsg: (msg: string) => void;
   setIsSnackbarVisible: (boolean: boolean) => void;
 }) {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -32,6 +34,7 @@ export default function CreateAccountForm({
     const user = await signUp({ email, password, firstname, surname });
 
     if (!user) {
+      setSnackbarMsg("All Fields Required");
       setIsSnackbarVisible(true);
       return;
     }

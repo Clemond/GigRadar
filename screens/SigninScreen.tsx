@@ -15,6 +15,7 @@ import { StatusBar } from "react-native";
 export default function SigninScreen() {
   const [isSnackbarVisible, setIsSnackbarVisible] = useState<boolean>(false);
   const onDismissSnackBar = () => setIsSnackbarVisible(false);
+  const [snackbarMsg, setSnackbarMsg] = useState<string | null>(null);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -30,7 +31,10 @@ export default function SigninScreen() {
             style={styles.logo}
             resizeMode="contain"
           />
-          <SigninForm setIsSnackbarVisible={setIsSnackbarVisible} />
+          <SigninForm
+            setSnackbarMsg={setSnackbarMsg}
+            setIsSnackbarVisible={setIsSnackbarVisible}
+          />
         </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
       <Snackbar

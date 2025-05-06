@@ -4,9 +4,14 @@ import { auth } from "../firebase/firebaseConfig";
 import { db } from "../firebase/firebaseConfig";
 import { IUser } from "../types/IUser";
 import { IUserData } from "../types/IUserData";
+import { useState } from "react";
 
 export function useSignup() {
+  const [loading, setLoading] = useState(false);
+
   const signUp = async (user: IUser) => {
+    setLoading(true);
+
     try {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
@@ -25,8 +30,9 @@ export function useSignup() {
 
       return userCredential.user;
     } catch (error) {
-      console.error("Signup error:", error);
       return null;
+    } finally {
+      setLoading(false);
     }
   };
 

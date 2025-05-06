@@ -14,8 +14,10 @@ import { ActivityIndicator } from "react-native-paper";
 import { setUserDataFromFirebase } from "../../utils/setUserDataFromFirebase";
 
 export default function SigninForm({
+  setSnackbarMsg,
   setIsSnackbarVisible
 }: {
+  setSnackbarMsg: (msg: string) => void;
   setIsSnackbarVisible: (boolean: boolean) => void;
 }) {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -28,6 +30,7 @@ export default function SigninForm({
     const user = await signIn(email, password);
 
     if (!user) {
+      setSnackbarMsg("Wrong Credentials");
       setIsSnackbarVisible(true);
       return;
     }

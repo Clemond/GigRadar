@@ -13,48 +13,23 @@ import { useEffect, useState } from "react";
 import { searchConcertsNearYou } from "../api/APIMethods";
 import { mapToConcertCard } from "../utils/eventMapper";
 import { IConcertCard } from "../types/IConcertCard";
-import { useUserLocation } from "../hooks/useUserLocation";
-import * as Location from "expo-location";
-import { getAuth } from "firebase/auth";
-import { IUserData } from "../types/IUserData";
-import { fetchUserData } from "../firebase/firebaseFirestore";
+import { useUserStore } from "../stores/useUserStore";
+import { useLocationStore } from "../stores/useLocationStore";
 
 export default function HomeScreen() {
   const [nearEventList, setNearEventList] = useState<IConcertCard[]>([]);
-  const [currentCity, setCurrentCity] = useState<string | null>(null);
-  const { location } = useUserLocation();
-  const [userData, setUserData] = useState<IUserData | null>(null);
-
-  useEffect(() => {
-    const uid = getAuth().currentUser?.uid;
-    if (uid) {
-      fetchUserData(uid).then((data) => {
-        if (data) setUserData(data as any);
-      });
-    }
-  }, []);
+  const { userData } = useUserStore();
+  const { location, city } = useLocationStore();
 
   useEffect(() => {
     async function fetchEvents() {
+      if (!city) return;
+
       try {
-        let city = "stockholm";
-
-        if (location) {
-          const reverseGeocoded = await Location.reverseGeocodeAsync({
-            latitude: location.coords.latitude,
-            longitude: location.coords.longitude
-          });
-
-          if (reverseGeocoded.length > 0 && reverseGeocoded[0].city) {
-            city = reverseGeocoded[0].city;
-          }
-        }
-
-        setCurrentCity(city);
-
         const events = await searchConcertsNearYou(city, 10);
         const mappedEvents =
           events._embedded?.events.map(mapToConcertCard) ?? [];
+
         mappedEvents.sort(
           (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
         );
@@ -84,7 +59,7 @@ export default function HomeScreen() {
           style={styles.searchInput}
         />
 
-        <Text style={styles.sectionTitle}>Concerts near {currentCity}</Text>
+        <Text style={styles.sectionTitle}>Concerts near {city}</Text>
 
         <ConcertList concertList={nearEventList} />
       </SafeAreaView>

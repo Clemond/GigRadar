@@ -11,6 +11,7 @@ import {
   Keyboard
 } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
+import { setUserDataFromFirebase } from "../../utils/setUserDataFromFirebase";
 
 export default function SigninForm({
   setIsSnackbarVisible
@@ -25,7 +26,13 @@ export default function SigninForm({
   async function handleLogin() {
     Keyboard.dismiss();
     const user = await signIn(email, password);
-    if (!user) setIsSnackbarVisible(true);
+
+    if (!user) {
+      setIsSnackbarVisible(true);
+      return;
+    }
+    await setUserDataFromFirebase();
+
     if (user) {
       navigation.navigate("HomeScreen");
     }

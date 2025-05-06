@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 import { useSignup } from "../../hooks/useSignup";
+import { setUserDataFromFirebase } from "../../utils/setUserDataFromFirebase";
 
 export default function CreateAccountForm({
   setIsSnackbarVisible
@@ -28,14 +29,17 @@ export default function CreateAccountForm({
 
   async function handleSignup() {
     Keyboard.dismiss();
-
     const user = await signUp({ email, password, firstname, surname });
+
     if (!user) {
       setIsSnackbarVisible(true);
       return;
     }
+    await setUserDataFromFirebase();
 
-    navigation.navigate("HomeScreen");
+    if (user) {
+      navigation.navigate("HomeScreen");
+    }
   }
 
   return (

@@ -68,9 +68,7 @@ export default function SigninForm({
         <Text style={styles.smallText}>Forgot Password?</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity
-        onPress={() => navigation.navigate("CreateAccountScreen")}
-      >
+      <TouchableOpacity onPress={() => navigation.navigate("RegisterScreen")}>
         <Text style={styles.smallText}>Create an account?</Text>
       </TouchableOpacity>
 

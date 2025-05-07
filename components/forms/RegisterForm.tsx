@@ -12,7 +12,7 @@ import { useSignup } from "../../hooks/useSignup";
 import { setUserDataFromFirebase } from "../../utils/setUserDataFromFirebase";
 import UseTypeNavigation from "../../hooks/useTypeNavigation";
 
-export default function CreateAccountForm({
+export default function RegisterForm({
   setSnackbarMsg,
   setIsSnackbarVisible
 }: {

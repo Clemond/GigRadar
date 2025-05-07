@@ -10,9 +10,9 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Snackbar } from "react-native-paper";
 import { useState } from "react";
 import { StatusBar } from "react-native";
-import CreateAccountForm from "../components/forms/CreateAccountForm";
+import RegisterForm from "../components/forms/RegisterForm";
 
-export default function CreateAccountScreen() {
+export default function RegisterScreen() {
   const [isSnackbarVisible, setIsSnackbarVisible] = useState<boolean>(false);
   const onDismissSnackBar = () => setIsSnackbarVisible(false);
   const [snackbarMsg, setSnackbarMsg] = useState<string | null>(null);
@@ -31,7 +31,7 @@ export default function CreateAccountScreen() {
             style={styles.logo}
             resizeMode="contain"
           />
-          <CreateAccountForm
+          <RegisterForm
             setSnackbarMsg={setSnackbarMsg}
             setIsSnackbarVisible={setIsSnackbarVisible}
           />

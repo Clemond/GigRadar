@@ -2,8 +2,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../types/navigation.types";
 import SigninScreen from "../screens/SigninScreen";
 import HomeScreen from "../screens/HomeScreen";
-import CreateAccountScreen from "../screens/CreateAccountScreen";
 import ExploreScreen from "../screens/ExploreScreen";
+import RegisterScreen from "../screens/RegisterScreen";
 
 export default function RootStack() {
   const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -18,10 +18,7 @@ export default function RootStack() {
     >
       <Stack.Screen name="SigninScreen" component={SigninScreen} />
       <Stack.Screen name="HomeScreen" component={HomeScreen} />
-      <Stack.Screen
-        name="CreateAccountScreen"
-        component={CreateAccountScreen}
-      />
+      <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
       <Stack.Screen name="ExploreScreen" component={ExploreScreen} />
     </Stack.Navigator>
   );

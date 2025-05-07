@@ -12,7 +12,8 @@ export default function RootStack() {
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
-        contentStyle: { backgroundColor: "#061A1E" }
+        contentStyle: { backgroundColor: "#061A1E" },
+        animation: "none"
       }}
     >
       <Stack.Screen name="SigninScreen" component={SigninScreen} />

@@ -3,47 +3,39 @@ import {
   TouchableOpacity,
   View,
   Text,
-  StyleSheet,
-  Alert
+  StyleSheet
 } from "react-native";
-import { IConcertCard } from "../../types/IConcertCard";
 import UseTypeNavigation from "../../hooks/useTypeNavigation";
 import { UseCurrentScreenStore } from "../../stores/useCurrentScreenStore";
 import ConcertCard from "../cards/ConcertCard";
-import { useEffect, useState } from "react";
 import { useLocationStore } from "../../stores/useLocationStore";
 import { searchConcertsNearYou } from "../../api/APIMethods";
 import { mapToConcertCard } from "../../utils/eventMapper";
+import { useQuery } from "@tanstack/react-query";
 
 export default function ConcertList() {
-  const [concertList, setConcertList] = useState<IConcertCard[]>([]);
   const navigation = UseTypeNavigation();
   const { setCurrentScreen } = UseCurrentScreenStore();
-  const { location, city } = useLocationStore();
+  const { city } = useLocationStore();
 
-  useEffect(() => {
-    async function fetchEvents() {
+  const {
+    data: concertList,
+    isLoading,
+    isError
+  } = useQuery({
+    queryKey: ["concerts", city],
+    queryFn: async () => {
       if (!city) return;
+      const events = await searchConcertsNearYou(city, 10);
+      const mapped = events._embedded?.events.map(mapToConcertCard) ?? [];
+      return mapped.sort(
+        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+      );
+    },
+    enabled: !!city
+  });
 
-      try {
-        const events = await searchConcertsNearYou(city, 10);
-        const mappedEvents =
-          events._embedded?.events.map(mapToConcertCard) ?? [];
-        mappedEvents.sort(
-          (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
-        );
-
-        setConcertList(mappedEvents);
-      } catch {
-        Alert.alert(
-          "Error",
-          "Failed to fetch concerts. Please try again later.",
-          [{ text: "OK" }]
-        );
-      }
-    }
-    fetchEvents();
-  }, [location]);
+  if (!concertList) return;
 
   return (
     <View style={styles.recommendedCard}>

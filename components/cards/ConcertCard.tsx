@@ -11,7 +11,7 @@ export default function ConcertCard({ concert }: { concert: IConcertCard }) {
         style={styles.cardBackgroundImage}
         resizeMode="cover"
       >
-        <Card.Content style={styles.cardContent}>
+        <Card.Content>
           <Text style={styles.cardTitle}>{concert.artist}</Text>
           <Text style={styles.cardSubtitle}>{concert.city}</Text>
           <Text style={styles.cardSubtitle}>{concert.date}</Text>
@@ -29,10 +29,6 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     width: 150,
     height: 150
-  },
-  cardContent: {
-    alignContent: "center",
-    justifyContent: "center"
   },
   cardBackgroundImage: {
     width: "100%",

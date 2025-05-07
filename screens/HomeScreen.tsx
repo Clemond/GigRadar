@@ -1,11 +1,4 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  TextInput,
-  StatusBar,
-  Alert
-} from "react-native";
+import { View, Text, StyleSheet, StatusBar, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ConcertList from "../components/homeScreen/ConcertList";
 import BottomNavBar from "../components/nav-bar/BottomNavBar";
@@ -15,6 +8,7 @@ import { mapToConcertCard } from "../utils/eventMapper";
 import { IConcertCard } from "../types/IConcertCard";
 import { useUserStore } from "../stores/useUserStore";
 import { useLocationStore } from "../stores/useLocationStore";
+import SearchBar from "../components/search-bar/SearchBar";
 
 export default function HomeScreen() {
   const [nearEventList, setNearEventList] = useState<IConcertCard[]>([]);
@@ -52,15 +46,8 @@ export default function HomeScreen() {
       <SafeAreaView style={styles.container}>
         <Text style={styles.greetingTitle}>Hello, {userData?.firstname}</Text>
         <Text style={styles.greeting}>Good to see you again!</Text>
-
-        <TextInput
-          placeholder="Search artist, city, or date..."
-          placeholderTextColor="#8CAFC5"
-          style={styles.searchInput}
-        />
-
+        <SearchBar />
         <Text style={styles.sectionTitle}>Concerts near {city}</Text>
-
         <ConcertList concertList={nearEventList} />
       </SafeAreaView>
       <BottomNavBar />
@@ -86,13 +73,6 @@ const styles = StyleSheet.create({
     color: "#8CAFC5",
     fontSize: 15,
     fontWeight: "bold",
-    marginBottom: 20
-  },
-  searchInput: {
-    backgroundColor: "#13353C",
-    borderRadius: 10,
-    padding: 14,
-    color: "#FFFFFF",
     marginBottom: 20
   },
   sectionTitle: {

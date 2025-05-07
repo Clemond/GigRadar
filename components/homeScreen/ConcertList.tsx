@@ -8,15 +8,14 @@ import {
 } from "react-native";
 import { Card } from "react-native-paper";
 import { IConcertCard } from "../../types/IConcertCard";
-import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { RootStackParamList } from "../../types/navigation.types";
+import UseTypeNavigation from "../../hooks/useTypeNavigation";
 
 export default function ConcertList({
   concertList
 }: {
   concertList: IConcertCard[];
 }) {
-  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+  const navigation = UseTypeNavigation();
 
   return (
     <View style={styles.recommendedCard}>

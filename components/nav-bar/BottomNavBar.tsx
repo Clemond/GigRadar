@@ -1,26 +1,37 @@
-import { useState } from "react";
 import { TouchableOpacity, View, StyleSheet } from "react-native";
 import { Icon } from "react-native-paper";
+import UseTypeNavigation from "../../hooks/useTypeNavigation";
+import { RootStackParamList } from "../../types/navigation.types";
+import { UseCurrentScreenStore } from "../../stores/useCurrentScreenStore";
 
 export default function BottomNavBar() {
-  const [currentScreen, setCurrentScreen] = useState("home");
+  const navigation = UseTypeNavigation();
+  const { currentScreen, setCurrentScreen } = UseCurrentScreenStore();
 
-  const listOfButtons = [
+  const listOfButtons: {
+    icon: string;
+    screen: string;
+    navigationName: keyof RootStackParamList;
+  }[] = [
     {
       icon: "home-outline",
-      screen: "home"
+      screen: "home",
+      navigationName: "HomeScreen"
     },
     {
       icon: "heart-outline",
-      screen: "heart"
+      screen: "heart",
+      navigationName: "HomeScreen" // Change this later when the screen in created
     },
     {
       icon: "magnify",
-      screen: "explore"
+      screen: "explore",
+      navigationName: "ExploreScreen"
     },
     {
       icon: "cog-outline",
-      screen: "settings"
+      screen: "settings",
+      navigationName: "HomeScreen" // Change this later when the screen in created
     }
   ];
 
@@ -31,6 +42,7 @@ export default function BottomNavBar() {
           key={index}
           onPress={() => {
             setCurrentScreen(element.screen);
+            navigation.navigate(element.navigationName);
           }}
           style={
             currentScreen === element.screen

@@ -1,5 +1,3 @@
-import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { RootStackParamList } from "../../types/navigation.types";
 import { useState } from "react";
 import {
   TextInput,
@@ -12,6 +10,7 @@ import {
 import { ActivityIndicator } from "react-native-paper";
 import { useSignup } from "../../hooks/useSignup";
 import { setUserDataFromFirebase } from "../../utils/setUserDataFromFirebase";
+import UseTypeNavigation from "../../hooks/useTypeNavigation";
 
 export default function CreateAccountForm({
   setSnackbarMsg,
@@ -20,7 +19,7 @@ export default function CreateAccountForm({
   setSnackbarMsg: (msg: string) => void;
   setIsSnackbarVisible: (boolean: boolean) => void;
 }) {
-  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+  const navigation = UseTypeNavigation();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [firstname, setFirstname] = useState<string>("");

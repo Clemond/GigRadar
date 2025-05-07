@@ -8,12 +8,17 @@ import {
 } from "react-native";
 import { Card } from "react-native-paper";
 import { IConcertCard } from "../../types/IConcertCard";
+import UseTypeNavigation from "../../hooks/useTypeNavigation";
+import { UseCurrentScreenStore } from "../../stores/useCurrentScreenStore";
 
 export default function ConcertList({
   concertList
 }: {
   concertList: IConcertCard[];
 }) {
+  const navigation = UseTypeNavigation();
+  const { setCurrentScreen } = UseCurrentScreenStore();
+
   return (
     <View style={styles.recommendedCard}>
       <ScrollView horizontal={true}>
@@ -34,7 +39,13 @@ export default function ConcertList({
           </Card>
         ))}
       </ScrollView>
-      <TouchableOpacity style={styles.exploreButton} onPress={() => {}}>
+      <TouchableOpacity
+        style={styles.exploreButton}
+        onPress={() => {
+          navigation.navigate("ExploreScreen");
+          setCurrentScreen("explore");
+        }}
+      >
         <Text style={styles.exploreButtonText}>Explore All Events</Text>
       </TouchableOpacity>
     </View>

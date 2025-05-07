@@ -9,6 +9,7 @@ import {
 import { Card } from "react-native-paper";
 import { IConcertCard } from "../../types/IConcertCard";
 import UseTypeNavigation from "../../hooks/useTypeNavigation";
+import { UseCurrentScreenStore } from "../../stores/useCurrentScreenStore";
 
 export default function ConcertList({
   concertList
@@ -16,6 +17,7 @@ export default function ConcertList({
   concertList: IConcertCard[];
 }) {
   const navigation = UseTypeNavigation();
+  const { setCurrentScreen } = UseCurrentScreenStore();
 
   return (
     <View style={styles.recommendedCard}>
@@ -41,6 +43,7 @@ export default function ConcertList({
         style={styles.exploreButton}
         onPress={() => {
           navigation.navigate("ExploreScreen");
+          setCurrentScreen("explore");
         }}
       >
         <Text style={styles.exploreButtonText}>Explore All Events</Text>

@@ -1,12 +1,12 @@
-import { useState } from "react";
 import { TouchableOpacity, View, StyleSheet } from "react-native";
 import { Icon } from "react-native-paper";
 import UseTypeNavigation from "../../hooks/useTypeNavigation";
 import { RootStackParamList } from "../../types/navigation.types";
+import { UseCurrentScreenStore } from "../../stores/useCurrentScreenStore";
 
 export default function BottomNavBar() {
   const navigation = UseTypeNavigation();
-  const [currentScreen, setCurrentScreen] = useState("home");
+  const { currentScreen, setCurrentScreen } = UseCurrentScreenStore();
 
   const listOfButtons: {
     icon: string;

@@ -10,3 +10,12 @@ export async function searchConcertsByCity(
     `${APIConfig.searchEvents}${APIConfig.key}&classificationName=music&city=${city}&size=${size}`
   ).then(({ data }) => data);
 }
+
+export async function searchConcertsByCountry(
+  countryCode: string,
+  size: number
+): Promise<ITicketmasterSearchResponse> {
+  return await Get<ITicketmasterSearchResponse>(
+    `${APIConfig.searchEvents}${APIConfig.key}&classificationName=music&countryCode=${countryCode}&size=${size}`
+  ).then(({ data }) => data);
+}

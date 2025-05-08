@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, StatusBar, SafeAreaView } from "react-native";
 import BottomNavBar from "../components/nav-bar/BottomNavBar";
 import SearchBar from "../components/search-bar/SearchBar";
 import FilterChipBar from "../components/filter/FilterChipBar";
+import ConcertList from "../components/lists/ConcertList";
 
 export default function ExploreScreen() {
   return (
@@ -19,10 +20,10 @@ export default function ExploreScreen() {
 
 const styles = StyleSheet.create({
   background: {
-    flex: 1
+    flex: 1,
+    justifyContent: "space-between"
   },
   container: {
-    flex: 1,
     paddingHorizontal: 20,
     paddingVertical: 15
   }

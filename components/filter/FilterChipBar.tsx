@@ -44,11 +44,7 @@ export default function FilterChipBar() {
   };
 
   return (
-    <ScrollView
-      showsHorizontalScrollIndicator={false}
-      horizontal
-      style={styles.scroll}
-    >
+    <ScrollView showsHorizontalScrollIndicator={false} horizontal>
       <View style={styles.container}>
         {filterList.map((item) => (
           <Chip
@@ -71,10 +67,8 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     gap: 10,
-    paddingVertical: 5
-  },
-  scroll: {
-    flexWrap: "wrap"
+    paddingVertical: 5,
+    marginBottom: 10
   },
   selectedChip: {
     opacity: 0.6

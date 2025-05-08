@@ -1,49 +1,83 @@
-import { View, ScrollView, StyleSheet } from "react-native";
+import { View, StyleSheet, FlatList, Text } from "react-native";
 import { useLocationStore } from "../../stores/useLocationStore";
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { searchConcertsByCountry } from "../../api/APIMethods";
 import { mapToConcertCard } from "../../utils/eventMapper";
 import ConcertCard from "../cards/ConcertCard";
+import { ITicketmasterSearchResponse } from "../../types/ITicketmasterEvent";
+import { IConcertCard } from "../../types/IConcertCard";
+import { ActivityIndicator } from "react-native-paper";
 
 export default function ConcertGrid() {
   const { countryCode } = useLocationStore();
 
   const {
     data: concertList,
+    fetchNextPage,
+    hasNextPage,
     isLoading,
     isError
-  } = useQuery({
+  } = useInfiniteQuery<ITicketmasterSearchResponse>({
     queryKey: ["concerts", countryCode],
-    queryFn: async () => {
-      if (!countryCode) return;
-      const events = await searchConcertsByCountry(countryCode, 10);
-      const mapped = events._embedded?.events.map(mapToConcertCard) ?? [];
-      return mapped.sort(
-        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+    enabled: !!countryCode,
+    initialPageParam: 0,
+    getNextPageParam: (lastPage, pages) => {
+      const currentPage = lastPage.page?.number ?? pages.length - 1;
+      const totalPages = lastPage.page?.totalPages ?? 0;
+      return currentPage + 1 < totalPages ? currentPage + 1 : undefined;
+    },
+    queryFn: async ({ pageParam = 0 }) => {
+      if (!countryCode) {
+        throw new Error("Missing country code");
+      }
+      return await searchConcertsByCountry(
+        countryCode,
+        pageParam as number,
+        10
       );
     }
   });
 
-  if (!concertList) return;
+  const allConcerts: IConcertCard[] =
+    concertList?.pages.flatMap((page) =>
+      (page._embedded?.events ?? []).map(mapToConcertCard)
+    ) ?? [];
+
+  const handleEndReached = () => {
+    if (hasNextPage) {
+      fetchNextPage();
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <ActivityIndicator animating={true} color="#2a2232"></ActivityIndicator>
+    );
+  }
+
+  if (isError) {
+    return <Text>Error loading concerts. Please try again.</Text>;
+  }
 
   return (
-    <ScrollView contentContainerStyle={styles.gridContainer}>
-      {concertList.map((event) => (
-        <View key={event.id} style={styles.cardWrapper}>
-          <ConcertCard concert={event} />
+    <FlatList
+      data={allConcerts}
+      keyExtractor={(item) => item.id}
+      renderItem={({ item }) => (
+        <View style={styles.cardWrapper}>
+          <ConcertCard concert={item} />
         </View>
-      ))}
-    </ScrollView>
+      )}
+      onEndReached={handleEndReached}
+      onEndReachedThreshold={0.1}
+      numColumns={2}
+    />
   );
 }
 
 const styles = StyleSheet.create({
-  gridContainer: {
-    flexDirection: "row",
-    flexWrap: "wrap"
-  },
   cardWrapper: {
-    width: "50%",
+    flex: 1,
     alignItems: "center"
   }
 });

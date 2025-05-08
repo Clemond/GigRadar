@@ -13,9 +13,10 @@ export async function searchConcertsByCity(
 
 export async function searchConcertsByCountry(
   countryCode: string,
+  page: number,
   size: number
 ): Promise<ITicketmasterSearchResponse> {
   return await Get<ITicketmasterSearchResponse>(
-    `${APIConfig.searchEvents}${APIConfig.key}&classificationName=music&countryCode=${countryCode}&size=${size}`
+    `${APIConfig.searchEvents}${APIConfig.key}&classificationName=music&countryCode=${countryCode}&size=${size}&page=${page}`
   ).then(({ data }) => data);
 }

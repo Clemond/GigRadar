@@ -13,6 +13,7 @@ export interface ITicketmasterEvent {
     height: number;
     ratio: string;
   }[];
+
   _embedded: {
     attractions: [
       {
@@ -28,6 +29,10 @@ export interface ITicketmasterEvent {
 }
 
 export interface ITicketmasterSearchResponse {
+  page?: {
+    number: number;
+    totalPages: number;
+  };
   _embedded?: {
     events: ITicketmasterEvent[];
   };

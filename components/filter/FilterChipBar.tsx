@@ -44,7 +44,11 @@ export default function FilterChipBar() {
   };
 
   return (
-    <ScrollView horizontal style={styles.scroll}>
+    <ScrollView
+      showsHorizontalScrollIndicator={false}
+      horizontal
+      style={styles.scroll}
+    >
       <View style={styles.container}>
         {filterList.map((item) => (
           <Chip

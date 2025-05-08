@@ -4,7 +4,8 @@ import { ITicketmasterSearchResponse } from "../types/ITicketmasterEvent";
 
 export async function searchConcertsByCity(
   city: string,
-  size: number
+  size: number,
+  page?: number
 ): Promise<ITicketmasterSearchResponse> {
   return await Get<ITicketmasterSearchResponse>(
     `${APIConfig.searchEvents}${APIConfig.key}&classificationName=music&city=${city}&size=${size}`

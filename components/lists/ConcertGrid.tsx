@@ -1,15 +1,23 @@
 import { View, StyleSheet, FlatList, Text } from "react-native";
 import { useLocationStore } from "../../stores/useLocationStore";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { searchConcertsByCountry } from "../../api/APIMethods";
+import {
+  searchConcertsByCity,
+  searchConcertsByCountry
+} from "../../api/APIMethods";
 import { mapToConcertCard } from "../../utils/eventMapper";
 import ConcertCard from "../cards/ConcertCard";
 import { ITicketmasterSearchResponse } from "../../types/ITicketmasterEvent";
 import { IConcertCard } from "../../types/IConcertCard";
 import { ActivityIndicator } from "react-native-paper";
 
-export default function ConcertGrid() {
-  const { countryCode } = useLocationStore();
+interface ConcertGridProps {
+  selectedFilters: string[];
+}
+
+export default function ConcertGrid({ selectedFilters }: ConcertGridProps) {
+  const { countryCode, city } = useLocationStore();
+  const isNearbySelected = selectedFilters.includes("Nearby");
 
   const {
     data: concertList,
@@ -18,7 +26,7 @@ export default function ConcertGrid() {
     isLoading,
     isError
   } = useInfiniteQuery<ITicketmasterSearchResponse>({
-    queryKey: ["concerts", countryCode],
+    queryKey: ["concerts", countryCode, isNearbySelected],
     enabled: !!countryCode,
     initialPageParam: 0,
     getNextPageParam: (lastPage, pages) => {
@@ -27,14 +35,21 @@ export default function ConcertGrid() {
       return currentPage + 1 < totalPages ? currentPage + 1 : undefined;
     },
     queryFn: async ({ pageParam = 0 }) => {
-      if (!countryCode) {
-        throw new Error("Missing country code");
+      if (isNearbySelected) {
+        if (!city) {
+          throw new Error("Missing city ");
+        }
+        return searchConcertsByCity(city, 10);
+      } else {
+        if (!countryCode) {
+          throw new Error("Missing country code");
+        }
+        return await searchConcertsByCountry(
+          countryCode,
+          pageParam as number,
+          10
+        );
       }
-      return await searchConcertsByCountry(
-        countryCode,
-        pageParam as number,
-        10
-      );
     }
   });
 

@@ -2,7 +2,7 @@ import { APIConfig } from "./APIConfig";
 import { Get } from "./APIUtils";
 import { ITicketmasterSearchResponse } from "../types/ITicketmasterEvent";
 
-export async function searchConcertsNearYou(
+export async function searchConcertsByCity(
   city: string,
   size: number
 ): Promise<ITicketmasterSearchResponse> {

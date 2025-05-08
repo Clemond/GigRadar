@@ -9,7 +9,7 @@ import UseTypeNavigation from "../../hooks/useTypeNavigation";
 import { UseCurrentScreenStore } from "../../stores/useCurrentScreenStore";
 import ConcertCard from "../cards/ConcertCard";
 import { useLocationStore } from "../../stores/useLocationStore";
-import { searchConcertsNearYou } from "../../api/APIMethods";
+import { searchConcertsByCity } from "../../api/APIMethods";
 import { mapToConcertCard } from "../../utils/eventMapper";
 import { useQuery } from "@tanstack/react-query";
 
@@ -26,7 +26,7 @@ export default function ConcertList() {
     queryKey: ["concerts", city],
     queryFn: async () => {
       if (!city) return;
-      const events = await searchConcertsNearYou(city, 10);
+      const events = await searchConcertsByCity(city, 10);
       const mapped = events._embedded?.events.map(mapToConcertCard) ?? [];
       return mapped.sort(
         (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()

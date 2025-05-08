@@ -1,9 +1,7 @@
 import { View, ScrollView, StyleSheet } from "react-native";
-import UseTypeNavigation from "../../hooks/useTypeNavigation";
-import { UseCurrentScreenStore } from "../../stores/useCurrentScreenStore";
 import { useLocationStore } from "../../stores/useLocationStore";
 import { useQuery } from "@tanstack/react-query";
-import { searchConcertsNearYou } from "../../api/APIMethods";
+import { searchConcertsByCity } from "../../api/APIMethods";
 import { mapToConcertCard } from "../../utils/eventMapper";
 import ConcertCard from "../cards/ConcertCard";
 
@@ -18,7 +16,7 @@ export default function ConcertGrid() {
     queryKey: ["concerts", city],
     queryFn: async () => {
       if (!city) return;
-      const events = await searchConcertsNearYou(city, 10);
+      const events = await searchConcertsByCity(city, 10);
       const mapped = events._embedded?.events.map(mapToConcertCard) ?? [];
       return mapped.sort(
         (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()

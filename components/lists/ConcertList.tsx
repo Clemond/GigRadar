@@ -35,10 +35,7 @@ export default function ConcertList() {
     enabled: !!city
   });
 
-  if (!concertList) {
-    console.error("Error fetching concerts");
-    return;
-  }
+  if (!concertList) return;
 
   return (
     <View style={styles.recommendedCard}>

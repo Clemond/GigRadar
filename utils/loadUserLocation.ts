@@ -3,7 +3,8 @@ import { useLocationStore } from "../stores/useLocationStore";
 import { Alert } from "react-native";
 
 export async function loadUserLocation() {
-  const { setLocation, setCity } = useLocationStore.getState();
+  const { setLocation, setCity, setCountry, setCountryCode } =
+    useLocationStore.getState();
 
   const { status } = await Location.requestForegroundPermissionsAsync();
   if (status !== "granted") {
@@ -20,5 +21,9 @@ export async function loadUserLocation() {
 
   const reverseGeocoded = await Location.reverseGeocodeAsync(location.coords);
   const city = reverseGeocoded?.[0]?.city ?? "stockholm";
+  const country = reverseGeocoded?.[0]?.country ?? "Sweden";
+  const countryCode = reverseGeocoded?.[0]?.isoCountryCode ?? "SE";
   setCity(city);
+  setCountry(country);
+  setCountryCode(countryCode);
 }

@@ -1,24 +1,22 @@
 import { View, ScrollView, StyleSheet } from "react-native";
-import UseTypeNavigation from "../../hooks/useTypeNavigation";
-import { UseCurrentScreenStore } from "../../stores/useCurrentScreenStore";
 import { useLocationStore } from "../../stores/useLocationStore";
 import { useQuery } from "@tanstack/react-query";
-import { searchConcertsNearYou } from "../../api/APIMethods";
+import { searchConcertsByCountry } from "../../api/APIMethods";
 import { mapToConcertCard } from "../../utils/eventMapper";
 import ConcertCard from "../cards/ConcertCard";
 
 export default function ConcertGrid() {
-  const { city } = useLocationStore();
+  const { countryCode } = useLocationStore();
 
   const {
     data: concertList,
     isLoading,
     isError
   } = useQuery({
-    queryKey: ["concerts", city],
+    queryKey: ["concerts", countryCode],
     queryFn: async () => {
-      if (!city) return;
-      const events = await searchConcertsNearYou(city, 10);
+      if (!countryCode) return;
+      const events = await searchConcertsByCountry(countryCode, 10);
       const mapped = events._embedded?.events.map(mapToConcertCard) ?? [];
       return mapped.sort(
         (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
@@ -26,10 +24,7 @@ export default function ConcertGrid() {
     }
   });
 
-  if (!concertList) {
-    console.error("Error fetching concerts");
-    return;
-  }
+  if (!concertList) return;
 
   return (
     <ScrollView contentContainerStyle={styles.gridContainer}>

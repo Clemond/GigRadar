@@ -29,9 +29,9 @@ export default function BottomNavBar() {
       navigationName: "ExploreScreen"
     },
     {
-      icon: "cog-outline",
-      screen: "settings",
-      navigationName: "HomeScreen" // Change this later when the screen in created
+      icon: "account-outline",
+      screen: "account",
+      navigationName: "AccountScreen"
     }
   ];
 

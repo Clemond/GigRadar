@@ -47,7 +47,8 @@ export default function ConcertGrid({ selectedFilters }: ConcertGridProps) {
         return await searchConcertsByCountry(
           countryCode,
           pageParam as number,
-          10
+          10,
+          "Pop" // ! Test
         );
       }
     }

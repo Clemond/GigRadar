@@ -27,10 +27,7 @@ export default function ConcertList() {
     queryFn: async () => {
       if (!city) return;
       const events = await searchConcertsByCity(city, 10);
-      const mapped = events._embedded?.events.map(mapToConcertCard) ?? [];
-      return mapped.sort(
-        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
-      );
+      return events._embedded?.events.map(mapToConcertCard) ?? [];
     },
     enabled: !!city
   });

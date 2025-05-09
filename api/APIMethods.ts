@@ -19,7 +19,7 @@ export async function searchConcertsByCity(
       : "";
 
   return await Get<ITicketmasterSearchResponse>(
-    `${APIConfig.searchEvents}${APIConfig.key}&classificationName=music&city=${city}&size=${size}${pageParam}${genreIdParam}`
+    `${APIConfig.searchEvents}${APIConfig.key}&classificationName=music&city=${city}&size=${size}${pageParam}${genreIdParam}&sort=date,asc`
   ).then(({ data }) => data);
 }
 
@@ -37,6 +37,6 @@ export async function searchConcertsByCountry(
       : "";
 
   return await Get<ITicketmasterSearchResponse>(
-    `${APIConfig.searchEvents}${APIConfig.key}&classificationName=music&countryCode=${countryCode}&size=${size}&page=${page}${genreIdParam}`
+    `${APIConfig.searchEvents}${APIConfig.key}&classificationName=music&countryCode=${countryCode}&size=${size}&page=${page}${genreIdParam}&sort=date,asc`
   ).then(({ data }) => data);
 }

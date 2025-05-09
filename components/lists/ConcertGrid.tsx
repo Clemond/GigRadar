@@ -10,6 +10,8 @@ import ConcertCard from "../cards/ConcertCard";
 import { ITicketmasterSearchResponse } from "../../types/ITicketmasterEvent";
 import { IConcertCard } from "../../types/IConcertCard";
 import { ActivityIndicator } from "react-native-paper";
+import { useEffect } from "react";
+import { IGenreName } from "../../types/IGenreName";
 
 interface ConcertGridProps {
   selectedFilters: string[];
@@ -26,7 +28,7 @@ export default function ConcertGrid({ selectedFilters }: ConcertGridProps) {
     isLoading,
     isError
   } = useInfiniteQuery<ITicketmasterSearchResponse>({
-    queryKey: ["concerts", countryCode, isNearbySelected],
+    queryKey: ["concerts", countryCode, isNearbySelected, selectedFilters],
     enabled: !!countryCode,
     initialPageParam: 0,
     getNextPageParam: (lastPage, pages) => {
@@ -44,20 +46,35 @@ export default function ConcertGrid({ selectedFilters }: ConcertGridProps) {
         if (!countryCode) {
           throw new Error("Missing country code");
         }
+
+        const genreFilters = selectedFilters.filter((f): f is IGenreName =>
+          [
+            "Pop",
+            "Country",
+            "Electronic",
+            "Rock",
+            "HipHop",
+            "Jazz",
+            "Classical"
+          ].includes(f as IGenreName)
+        );
+
         return await searchConcertsByCountry(
           countryCode,
           pageParam as number,
           10,
-          "Pop" // ! Test
+          genreFilters
         );
       }
     }
   });
 
   const allConcerts: IConcertCard[] =
-    concertList?.pages.flatMap((page) =>
-      (page._embedded?.events ?? []).map(mapToConcertCard)
-    ) ?? [];
+    concertList?.pages
+      .flatMap((page) => (page._embedded?.events ?? []).map(mapToConcertCard))
+      .sort(
+        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+      ) ?? [];
 
   const handleEndReached = () => {
     if (hasNextPage) {

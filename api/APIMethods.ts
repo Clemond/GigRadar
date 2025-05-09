@@ -20,10 +20,14 @@ export async function searchConcertsByCountry(
   countryCode: string,
   page: number,
   size: number,
-  genreName?: IGenreName
+  genreNames?: IGenreName[]
 ): Promise<ITicketmasterSearchResponse> {
   const genreIdParam =
-    genreName !== undefined ? `&classificationId=${genreIdMap[genreName]}` : "";
+    genreNames && genreNames.length > 0
+      ? `&classificationId=${genreNames
+          .map((name) => genreIdMap[name])
+          .join(",")}`
+      : "";
 
   return await Get<ITicketmasterSearchResponse>(
     `${APIConfig.searchEvents}${APIConfig.key}&classificationName=music&countryCode=${countryCode}&size=${size}&page=${page}${genreIdParam}`

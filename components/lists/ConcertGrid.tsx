@@ -10,7 +10,6 @@ import ConcertCard from "../cards/ConcertCard";
 import { ITicketmasterSearchResponse } from "../../types/ITicketmasterEvent";
 import { IConcertCard } from "../../types/IConcertCard";
 import { ActivityIndicator } from "react-native-paper";
-import { useEffect } from "react";
 import { IGenreName } from "../../types/IGenreName";
 
 interface ConcertGridProps {
@@ -72,6 +71,16 @@ export default function ConcertGrid({ selectedFilters }: ConcertGridProps) {
   const allConcerts: IConcertCard[] =
     concertList?.pages
       .flatMap((page) => (page._embedded?.events ?? []).map(mapToConcertCard))
+      .reduce<IConcertCard[]>((acc, current) => {
+        const exists = acc.some(
+          (c) =>
+            c.artist === current.artist &&
+            new Date(c.date).toDateString() ===
+              new Date(current.date).toDateString()
+        );
+        if (!exists) acc.push(current);
+        return acc;
+      }, [])
       .sort(
         (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
       ) ?? [];

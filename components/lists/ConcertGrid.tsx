@@ -10,6 +10,9 @@ import ConcertCard from "../cards/ConcertCard";
 import { ITicketmasterSearchResponse } from "../../types/ITicketmasterEvent";
 import { IConcertCard } from "../../types/IConcertCard";
 import { ActivityIndicator } from "react-native-paper";
+import { deduplicateConcerts } from "../../utils/deduplicateConcerts";
+import { getNextPageParam } from "../../utils/getNextPageParam";
+import { AVAILABLE_GENRES, Genre } from "../../constants/genres";
 
 interface ConcertGridProps {
   selectedFilters: string[];
@@ -26,37 +29,50 @@ export default function ConcertGrid({ selectedFilters }: ConcertGridProps) {
     isLoading,
     isError
   } = useInfiniteQuery<ITicketmasterSearchResponse>({
-    queryKey: ["concerts", countryCode, isNearbySelected],
+    queryKey: ["concerts", countryCode, isNearbySelected, selectedFilters],
     enabled: !!countryCode,
     initialPageParam: 0,
-    getNextPageParam: (lastPage, pages) => {
-      const currentPage = lastPage.page?.number ?? pages.length - 1;
-      const totalPages = lastPage.page?.totalPages ?? 0;
-      return currentPage + 1 < totalPages ? currentPage + 1 : undefined;
-    },
+    getNextPageParam,
     queryFn: async ({ pageParam = 0 }) => {
       if (isNearbySelected) {
         if (!city) {
           throw new Error("Missing city ");
         }
-        return await searchConcertsByCity(city, 10, pageParam as number);
+
+        const genreFilters = selectedFilters.filter((f): f is Genre =>
+          AVAILABLE_GENRES.includes(f as Genre)
+        );
+
+        return await searchConcertsByCity(
+          city,
+          10,
+          pageParam as number,
+          genreFilters
+        );
       } else {
         if (!countryCode) {
           throw new Error("Missing country code");
         }
+
+        const genreFilters = selectedFilters.filter((f): f is Genre =>
+          AVAILABLE_GENRES.includes(f as Genre)
+        );
+
         return await searchConcertsByCountry(
           countryCode,
           pageParam as number,
-          10
+          10,
+          genreFilters
         );
       }
     }
   });
 
-  const allConcerts: IConcertCard[] =
+  const allConcerts: IConcertCard[] = deduplicateConcerts(
     concertList?.pages.flatMap((page) =>
       (page._embedded?.events ?? []).map(mapToConcertCard)
-    ) ?? [];
+    ) ?? []
+  );
 
   const handleEndReached = () => {
     if (hasNextPage) {

@@ -19,7 +19,7 @@ export default function FilterChipBar({
       icon: "calendar-today"
     },
     {
-      name: "Pop",
+      name: "HipHop",
       icon: "party-popper"
     },
     {

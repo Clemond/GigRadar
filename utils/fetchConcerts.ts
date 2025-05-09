@@ -23,16 +23,27 @@ export const fetchConcerts = async ({
     AVAILABLE_GENRES.includes(f as Genre)
   );
 
+  const isTodaySelected = selectedFilters.includes("Today");
+
   if (isNearbySelected) {
     if (!city) throw new Error("Missing city");
-    return await searchConcertsByCity(city, 10, pageParam, genreFilters);
+
+    return await searchConcertsByCity(
+      city,
+      10,
+      pageParam,
+      genreFilters,
+      isTodaySelected
+    );
   }
 
   if (!countryCode) throw new Error("Missing country code");
+
   return await searchConcertsByCountry(
     countryCode,
     pageParam,
     10,
-    genreFilters
+    genreFilters,
+    isTodaySelected
   );
 };

@@ -31,7 +31,7 @@ export default function BottomNavBar() {
     {
       icon: "account-outline",
       screen: "account",
-      navigationName: "AccountScreen" // Change this later when the screen in created
+      navigationName: "AccountScreen"
     }
   ];
 

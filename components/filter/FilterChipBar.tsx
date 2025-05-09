@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import { Chip } from "react-native-paper";
+import { listOfFilterChips } from "../../constants/listOfFilterChips";
 
 interface FilterChipBarProps {
   selectedFilters: string[];
@@ -12,30 +13,6 @@ export default function FilterChipBar({
   setSelectedFilters
 }: FilterChipBarProps) {
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
-
-  const filterList = [
-    {
-      name: "Today",
-      icon: "calendar-today"
-    },
-    {
-      name: "HipHop",
-      icon: "party-popper"
-    },
-    {
-      name: "Rock",
-      icon: "rocket-outline"
-    },
-    {
-      name: "Nearby",
-      icon: "map-marker-circle"
-    },
-    {
-      name: "More",
-      icon: "tune",
-      isModal: true
-    }
-  ];
 
   const handleChipPress = (filterName: string, isModal?: boolean) => {
     if (isModal) {
@@ -57,7 +34,7 @@ export default function FilterChipBar({
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.scrollContent}
       >
-        {filterList.map((item) => (
+        {listOfFilterChips.map((item) => (
           <Chip
             key={item.name}
             icon={item.icon}

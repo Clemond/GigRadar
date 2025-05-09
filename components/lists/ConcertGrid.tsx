@@ -53,12 +53,21 @@ export default function ConcertGrid({ selectedFilters }: ConcertGridProps) {
 
   if (isLoading) {
     return (
-      <ActivityIndicator animating={true} color="#2a2232"></ActivityIndicator>
+      <ActivityIndicator
+        style={styles.activityIndicator}
+        animating={true}
+        color="#F77E32"
+        size={70}
+      ></ActivityIndicator>
     );
   }
 
   if (isError) {
     return <Text>Error loading concerts. Please try again.</Text>;
+  }
+
+  if (allConcerts.length === 0) {
+    return <Text style={styles.message}>No concerts found</Text>;
   }
 
   return (
@@ -81,5 +90,14 @@ const styles = StyleSheet.create({
   cardWrapper: {
     flex: 1,
     alignItems: "center"
+  },
+  message: {
+    textAlign: "center",
+    marginTop: 40,
+    fontSize: 20,
+    color: "#F77E32"
+  },
+  activityIndicator: {
+    flex: 1
   }
 });

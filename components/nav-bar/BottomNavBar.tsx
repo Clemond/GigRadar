@@ -29,7 +29,7 @@ export default function BottomNavBar() {
       navigationName: "ExploreScreen"
     },
     {
-      icon: "cog-outline",
+      icon: "account-outline",
       screen: "settings",
       navigationName: "HomeScreen" // Change this later when the screen in created
     }

@@ -38,7 +38,17 @@ export default function ConcertGrid({ selectedFilters }: ConcertGridProps) {
         if (!city) {
           throw new Error("Missing city ");
         }
-        return await searchConcertsByCity(city, 10, pageParam as number);
+
+        const genreFilters = selectedFilters.filter((f): f is Genre =>
+          AVAILABLE_GENRES.includes(f as Genre)
+        );
+
+        return await searchConcertsByCity(
+          city,
+          10,
+          pageParam as number,
+          genreFilters
+        );
       } else {
         if (!countryCode) {
           throw new Error("Missing country code");

@@ -7,8 +7,10 @@ export async function searchConcertsByCity(
   size: number,
   page?: number
 ): Promise<ITicketmasterSearchResponse> {
+  const pageParam = page !== undefined ? `&page=${page}` : "";
+
   return await Get<ITicketmasterSearchResponse>(
-    `${APIConfig.searchEvents}${APIConfig.key}&classificationName=music&city=${city}&size=${size}`
+    `${APIConfig.searchEvents}${APIConfig.key}&classificationName=music&city=${city}&size=${size}${pageParam}`
   ).then(({ data }) => data);
 }
 

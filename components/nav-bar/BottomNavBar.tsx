@@ -30,8 +30,8 @@ export default function BottomNavBar() {
     },
     {
       icon: "account-outline",
-      screen: "settings",
-      navigationName: "HomeScreen" // Change this later when the screen in created
+      screen: "account",
+      navigationName: "AccountScreen" // Change this later when the screen in created
     }
   ];
 

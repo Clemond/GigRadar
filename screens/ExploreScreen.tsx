@@ -3,16 +3,22 @@ import BottomNavBar from "../components/nav-bar/BottomNavBar";
 import SearchBar from "../components/search-bar/SearchBar";
 import FilterChipBar from "../components/filter/FilterChipBar";
 import ConcertGrid from "../components/lists/ConcertGrid";
+import { useState } from "react";
 
 export default function ExploreScreen() {
+  const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
+
   return (
     <View style={styles.background}>
       <StatusBar barStyle="light-content" backgroundColor="#061A1E" />
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.topContent}>
           <SearchBar />
-          <FilterChipBar />
-          <ConcertGrid />
+          <FilterChipBar
+            selectedFilters={selectedFilters}
+            setSelectedFilters={setSelectedFilters}
+          />
+          <ConcertGrid selectedFilters={selectedFilters} />
         </View>
       </SafeAreaView>
       <BottomNavBar />

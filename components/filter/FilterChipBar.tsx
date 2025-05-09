@@ -2,9 +2,16 @@ import { useState } from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import { Chip } from "react-native-paper";
 
-export default function FilterChipBar() {
+interface FilterChipBarProps {
+  selectedFilters: string[];
+  setSelectedFilters: React.Dispatch<React.SetStateAction<string[]>>;
+}
+
+export default function FilterChipBar({
+  selectedFilters,
+  setSelectedFilters
+}: FilterChipBarProps) {
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
-  const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
 
   const filterList = [
     {

@@ -1,10 +1,6 @@
 import { View, StyleSheet, FlatList, Text } from "react-native";
 import { useLocationStore } from "../../stores/useLocationStore";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import {
-  searchConcertsByCity,
-  searchConcertsByCountry
-} from "../../api/APIMethods";
 import { mapToConcertCard } from "../../utils/eventMapper";
 import ConcertCard from "../cards/ConcertCard";
 import { ITicketmasterSearchResponse } from "../../types/ITicketmasterEvent";
@@ -12,7 +8,7 @@ import { IConcertCard } from "../../types/IConcertCard";
 import { ActivityIndicator } from "react-native-paper";
 import { deduplicateConcerts } from "../../utils/deduplicateConcerts";
 import { getNextPageParam } from "../../utils/getNextPageParam";
-import { AVAILABLE_GENRES, Genre } from "../../constants/genres";
+import { fetchConcerts } from "../../utils/fetchConcerts";
 
 interface ConcertGridProps {
   selectedFilters: string[];
@@ -33,39 +29,14 @@ export default function ConcertGrid({ selectedFilters }: ConcertGridProps) {
     enabled: !!countryCode,
     initialPageParam: 0,
     getNextPageParam,
-    queryFn: async ({ pageParam = 0 }) => {
-      if (isNearbySelected) {
-        if (!city) {
-          throw new Error("Missing city ");
-        }
-
-        const genreFilters = selectedFilters.filter((f): f is Genre =>
-          AVAILABLE_GENRES.includes(f as Genre)
-        );
-
-        return await searchConcertsByCity(
-          city,
-          10,
-          pageParam as number,
-          genreFilters
-        );
-      } else {
-        if (!countryCode) {
-          throw new Error("Missing country code");
-        }
-
-        const genreFilters = selectedFilters.filter((f): f is Genre =>
-          AVAILABLE_GENRES.includes(f as Genre)
-        );
-
-        return await searchConcertsByCountry(
-          countryCode,
-          pageParam as number,
-          10,
-          genreFilters
-        );
-      }
-    }
+    queryFn: ({ pageParam = 0 }) =>
+      fetchConcerts({
+        city,
+        countryCode,
+        pageParam: Number(pageParam),
+        isNearbySelected,
+        selectedFilters
+      })
   });
 
   const allConcerts: IConcertCard[] = deduplicateConcerts(

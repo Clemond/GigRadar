@@ -1,43 +1,16 @@
 import { TouchableOpacity, View, StyleSheet } from "react-native";
 import { Icon } from "react-native-paper";
 import UseTypeNavigation from "../../hooks/useTypeNavigation";
-import { RootStackParamList } from "../../types/navigation.types";
 import { UseCurrentScreenStore } from "../../stores/useCurrentScreenStore";
+import { listOfNavBarButtons } from "../../constants/listOfNavBarButtons";
 
 export default function BottomNavBar() {
   const navigation = UseTypeNavigation();
   const { currentScreen, setCurrentScreen } = UseCurrentScreenStore();
 
-  const listOfButtons: {
-    icon: string;
-    screen: string;
-    navigationName: keyof RootStackParamList;
-  }[] = [
-    {
-      icon: "home-outline",
-      screen: "home",
-      navigationName: "HomeScreen"
-    },
-    {
-      icon: "heart-outline",
-      screen: "heart",
-      navigationName: "HomeScreen" // Change this later when the screen in created
-    },
-    {
-      icon: "magnify",
-      screen: "explore",
-      navigationName: "ExploreScreen"
-    },
-    {
-      icon: "account-outline",
-      screen: "account",
-      navigationName: "AccountScreen"
-    }
-  ];
-
   return (
     <View style={styles.container}>
-      {listOfButtons.map((element, index) => (
+      {listOfNavBarButtons.map((element, index) => (
         <TouchableOpacity
           key={index}
           onPress={() => {

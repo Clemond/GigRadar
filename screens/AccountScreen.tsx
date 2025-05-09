@@ -3,6 +3,7 @@ import { Avatar, Divider } from "react-native-paper";
 import { useUserStore } from "../stores/useUserStore";
 import BottomNavBar from "../components/nav-bar/BottomNavBar";
 import { OptionRow } from "../components/options-row/OptionsRow";
+import { listOfOptions } from "../constants/accountOptions";
 
 export default function AccountScreen() {
   const { userData } = useUserStore();
@@ -23,12 +24,15 @@ export default function AccountScreen() {
 
         <Divider style={styles.divider} />
 
+        <View style={styles.favoriteCard}>
+          <Text style={styles.favoriteCardNameText}>Saved concerts</Text>
+          <Text style={styles.favoriteCardNameNumber}>5</Text>
+        </View>
+
         <View style={styles.options}>
-          <OptionRow icon="account-edit" label="Edit Profile" />
-          <OptionRow icon="calendar-check" label="My Bookings" />
-          <OptionRow icon="music" label="Favorite Genres" />
-          <OptionRow icon="cog" label="Settings" />
-          <OptionRow icon="logout" label="Log Out" />
+          {listOfOptions.map((option, index) => (
+            <OptionRow key={index} icon={option.icon} label={option.label} />
+          ))}
         </View>
       </SafeAreaView>
       <BottomNavBar />
@@ -68,5 +72,19 @@ const styles = StyleSheet.create({
   },
   options: {
     marginTop: 10
+  },
+  favoriteCard: {
+    backgroundColor: "#13353C",
+    padding: 20,
+    alignItems: "center",
+    borderRadius: 10
+  },
+  favoriteCardNameText: {
+    color: "#FFF",
+    fontSize: 20
+  },
+  favoriteCardNameNumber: {
+    color: "#F77E32",
+    fontSize: 25
   }
 });

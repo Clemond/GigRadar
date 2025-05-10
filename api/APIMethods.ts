@@ -1,4 +1,3 @@
-// api/APIMethods.ts
 import { APIConfig } from "./APIConfig";
 import { Get } from "./APIUtils";
 import { ITicketmasterSearchResponse } from "../types/ITicketmasterEvent";
@@ -11,13 +10,15 @@ async function searchConcertsBase({
   size,
   page,
   genreNames,
-  onlyToday
+  onlyToday,
+  keyword
 }: {
   locationParam: string;
   size: number;
   page?: number;
   genreNames?: IGenreName[];
   onlyToday?: boolean;
+  keyword?: string;
 }): Promise<ITicketmasterSearchResponse> {
   const query = [
     `${APIConfig.searchEvents}${APIConfig.key}`,
@@ -26,9 +27,13 @@ async function searchConcertsBase({
     `&size=${size}`,
     buildPageParam(page),
     buildGenreParam(genreNames),
+    keyword ? `&keyword=${encodeURIComponent(keyword)}` : "",
     "&sort=date,asc",
     getTodayDateRange(!!onlyToday)
   ].join("");
+
+  console.log("Final query URL:", query);
+  console.log("Keyword passed to searchConcertBase: " + keyword);
 
   return await Get<ITicketmasterSearchResponse>(query).then(({ data }) => data);
 }
@@ -38,14 +43,16 @@ export function searchConcertsByCity(
   size: number,
   page?: number,
   genreNames?: IGenreName[],
-  onlyToday: boolean = false
+  onlyToday: boolean = false,
+  keyword?: string
 ) {
   return searchConcertsBase({
     locationParam: `&city=${city}`,
     size,
     page,
     genreNames,
-    onlyToday
+    onlyToday,
+    keyword
   });
 }
 
@@ -54,13 +61,15 @@ export function searchConcertsByCountry(
   page: number,
   size: number,
   genreNames?: IGenreName[],
-  onlyToday: boolean = false
+  onlyToday: boolean = false,
+  keyword?: string
 ) {
   return searchConcertsBase({
     locationParam: `&countryCode=${countryCode}`,
     size,
     page,
     genreNames,
-    onlyToday
+    onlyToday,
+    keyword
   });
 }

@@ -10,6 +10,7 @@ interface FetchConcertsParams {
   pageParam: number;
   isNearbySelected: boolean;
   selectedFilters: string[];
+  keyword?: string;
 }
 
 export const fetchConcerts = async ({
@@ -17,7 +18,8 @@ export const fetchConcerts = async ({
   countryCode,
   pageParam,
   isNearbySelected,
-  selectedFilters
+  selectedFilters,
+  keyword
 }: FetchConcertsParams) => {
   const genreFilters = selectedFilters.filter((f): f is Genre =>
     AVAILABLE_GENRES.includes(f as Genre)
@@ -33,7 +35,8 @@ export const fetchConcerts = async ({
       10,
       pageParam,
       genreFilters,
-      isTodaySelected
+      isTodaySelected,
+      keyword
     );
   }
 
@@ -44,6 +47,7 @@ export const fetchConcerts = async ({
     pageParam,
     10,
     genreFilters,
-    isTodaySelected
+    isTodaySelected,
+    keyword
   );
 };

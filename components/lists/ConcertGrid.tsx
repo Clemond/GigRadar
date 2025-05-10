@@ -12,9 +12,13 @@ import { fetchConcerts } from "../../utils/fetchConcerts";
 
 interface ConcertGridProps {
   selectedFilters: string[];
+  searchTerm: string;
 }
 
-export default function ConcertGrid({ selectedFilters }: ConcertGridProps) {
+export default function ConcertGrid({
+  selectedFilters,
+  searchTerm
+}: ConcertGridProps) {
   const { countryCode, city } = useLocationStore();
   const isNearbySelected = selectedFilters.includes("Nearby");
 
@@ -25,7 +29,13 @@ export default function ConcertGrid({ selectedFilters }: ConcertGridProps) {
     isLoading,
     isError
   } = useInfiniteQuery<ITicketmasterSearchResponse>({
-    queryKey: ["concerts", countryCode, isNearbySelected, selectedFilters],
+    queryKey: [
+      "concerts",
+      countryCode,
+      isNearbySelected,
+      selectedFilters,
+      searchTerm
+    ],
     enabled: !!countryCode,
     initialPageParam: 0,
     getNextPageParam,
@@ -35,7 +45,8 @@ export default function ConcertGrid({ selectedFilters }: ConcertGridProps) {
         countryCode,
         pageParam: Number(pageParam),
         isNearbySelected,
-        selectedFilters
+        selectedFilters,
+        keyword: searchTerm
       })
   });
 

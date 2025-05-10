@@ -7,18 +7,23 @@ import { useState } from "react";
 
 export default function ExploreScreen() {
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   return (
     <View style={styles.background}>
       <StatusBar barStyle="light-content" backgroundColor="#061A1E" />
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.topContent}>
-          <SearchBar />
+          <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+
           <FilterChipBar
             selectedFilters={selectedFilters}
             setSelectedFilters={setSelectedFilters}
           />
-          <ConcertGrid selectedFilters={selectedFilters} />
+          <ConcertGrid
+            searchTerm={searchTerm}
+            selectedFilters={selectedFilters}
+          />
         </View>
       </SafeAreaView>
       <BottomNavBar />

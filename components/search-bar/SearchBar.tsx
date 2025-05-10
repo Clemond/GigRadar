@@ -1,12 +1,19 @@
-import { TextInput } from "react-native";
-import { StyleSheet } from "react-native";
+import { TextInput, StyleSheet } from "react-native";
 
-export default function SearchBar() {
+export default function SearchBar({
+  searchTerm,
+  setSearchTerm
+}: {
+  searchTerm?: string;
+  setSearchTerm?: (text: string) => void;
+}) {
   return (
     <TextInput
       placeholder="Search artist, city, or date..."
       placeholderTextColor="#8CAFC5"
       style={styles.searchInput}
+      value={searchTerm}
+      onChangeText={setSearchTerm}
     />
   );
 }

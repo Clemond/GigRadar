@@ -4,7 +4,7 @@ import { useUserStore } from "../stores/useUserStore";
 import BottomNavBar from "../components/nav-bar/BottomNavBar";
 import { OptionRow } from "../components/options-row/OptionsRow";
 import UseTypeNavigation from "../hooks/useTypeNavigation";
-import { getAccountOptions } from "../constants/accountOptions";
+import { getAccountOptions } from "../constants/listOfAccountOptions.";
 import { useLocationStore } from "../stores/useLocationStore";
 import { UseCurrentScreenStore } from "../stores/useCurrentScreenStore";
 

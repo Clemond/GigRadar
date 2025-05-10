@@ -3,10 +3,24 @@ import { Avatar, Divider } from "react-native-paper";
 import { useUserStore } from "../stores/useUserStore";
 import BottomNavBar from "../components/nav-bar/BottomNavBar";
 import { OptionRow } from "../components/options-row/OptionsRow";
-import { listOfOptions } from "../constants/accountOptions";
+import UseTypeNavigation from "../hooks/useTypeNavigation";
+import { getAccountOptions } from "../constants/accountOptions";
+import { useLocationStore } from "../stores/useLocationStore";
+import { UseCurrentScreenStore } from "../stores/useCurrentScreenStore";
 
 export default function AccountScreen() {
   const { userData } = useUserStore();
+  const navigation = UseTypeNavigation();
+  const { clearUserData } = useUserStore();
+  const { clearLocation } = useLocationStore();
+  const { resetCurrentScreen } = UseCurrentScreenStore();
+  const listOfOptions = getAccountOptions(
+    navigation,
+    clearUserData,
+    clearLocation,
+    resetCurrentScreen
+  );
+
   const initials = `${userData?.firstname?.[0] ?? ""}${
     userData?.surname?.[0] ?? ""
   }`.toUpperCase();
@@ -31,7 +45,12 @@ export default function AccountScreen() {
 
         <View style={styles.options}>
           {listOfOptions.map((option, index) => (
-            <OptionRow key={index} icon={option.icon} label={option.label} />
+            <OptionRow
+              key={index}
+              icon={option.icon}
+              label={option.label}
+              onPress={option.onPress}
+            />
           ))}
         </View>
       </SafeAreaView>

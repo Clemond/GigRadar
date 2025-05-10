@@ -3,33 +3,39 @@ import { Get } from "./APIUtils";
 import { ITicketmasterSearchResponse } from "../types/ITicketmasterEvent";
 import { IGenreName } from "../types/IGenreName";
 import { getTodayDateRange } from "../utils/getTodaysDateRange";
-import { buildGenreParam, buildPageParam } from "../utils/buildQueryParams";
+import {
+  buildGenreParam,
+  buildKeywordParam,
+  buildPageParam,
+  buildSizeParam
+} from "../utils/buildQueryParams";
 
 async function searchConcertsBase({
   locationParam,
   size,
   page,
   genreNames,
-  onlyToday,
+  isOnlyToday,
   keyword
 }: {
   locationParam: string;
   size: number;
   page?: number;
   genreNames?: IGenreName[];
-  onlyToday?: boolean;
+  isOnlyToday: boolean;
   keyword?: string;
 }): Promise<ITicketmasterSearchResponse> {
   const query = [
-    `${APIConfig.searchEvents}${APIConfig.key}`,
-    "&classificationName=music",
+    APIConfig.events.search,
+    APIConfig.key,
+    APIConfig.eventType.music,
+    APIConfig.fetchOrder.ascending,
     locationParam,
-    `&size=${size}`,
+    buildSizeParam(size),
     buildPageParam(page),
     buildGenreParam(genreNames),
-    keyword ? `&keyword=${encodeURIComponent(keyword)}` : "",
-    "&sort=date,asc",
-    getTodayDateRange(!!onlyToday)
+    buildKeywordParam(keyword),
+    getTodayDateRange(isOnlyToday)
   ].join("");
 
   return await Get<ITicketmasterSearchResponse>(query).then(({ data }) => data);
@@ -40,7 +46,7 @@ export function searchConcertsByCity(
   size: number,
   page?: number,
   genreNames?: IGenreName[],
-  onlyToday: boolean = false,
+  isOnlyToday: boolean = false,
   keyword?: string
 ) {
   return searchConcertsBase({
@@ -48,7 +54,7 @@ export function searchConcertsByCity(
     size,
     page,
     genreNames,
-    onlyToday,
+    isOnlyToday,
     keyword
   });
 }
@@ -58,7 +64,7 @@ export function searchConcertsByCountry(
   page: number,
   size: number,
   genreNames?: IGenreName[],
-  onlyToday: boolean = false,
+  isOnlyToday: boolean = false,
   keyword?: string
 ) {
   return searchConcertsBase({
@@ -66,7 +72,7 @@ export function searchConcertsByCountry(
     size,
     page,
     genreNames,
-    onlyToday,
+    isOnlyToday,
     keyword
   });
 }

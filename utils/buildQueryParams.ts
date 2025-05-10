@@ -11,3 +11,11 @@ export function buildGenreParam(genreNames?: IGenreName[]) {
 export function buildPageParam(page?: number) {
   return page !== undefined ? `&page=${page}` : "";
 }
+
+export function buildKeywordParam(keyword?: string) {
+  return keyword !== undefined ? `&keyword=${keyword}` : "";
+}
+
+export function buildSizeParam(size: number) {
+  return `&size=${size}`;
+}

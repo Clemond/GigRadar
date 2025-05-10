@@ -26,7 +26,7 @@ async function searchConcertsBase({
   keyword?: string;
 }): Promise<ITicketmasterSearchResponse> {
   const query = [
-    APIConfig.searchEvents,
+    APIConfig.events.search,
     APIConfig.key,
     APIConfig.eventType.music,
     APIConfig.fetchOrder.ascending,

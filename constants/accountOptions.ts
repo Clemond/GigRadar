@@ -3,7 +3,10 @@ import { RootStackParamList } from "../types/navigation.types";
 import { handleSignOut } from "../utils/handleSignout";
 
 export function getAccountOptions(
-  navigation: NavigationProp<RootStackParamList>
+  navigation: NavigationProp<RootStackParamList>,
+  clearUserData: () => void,
+  clearLocation: () => void,
+  resetCurrentScreen: () => void
 ): {
   icon: string;
   label: string;
@@ -33,7 +36,13 @@ export function getAccountOptions(
     {
       icon: "logout",
       label: "Log Out",
-      onPress: () => handleSignOut(navigation)
+      onPress: () =>
+        handleSignOut(
+          navigation,
+          clearUserData,
+          clearLocation,
+          resetCurrentScreen
+        )
     }
   ];
 }

@@ -6,10 +6,11 @@ interface ILocationState {
   city: string | null;
   country: string | null;
   countryCode: string | null;
-  setLocation: (loc: Location.LocationObject) => void;
+  setLocation: (loc: Location.LocationObject | null) => void;
   setCity: (city: string) => void;
   setCountry: (country: string) => void;
   setCountryCode: (countryCode: string) => void;
+  clearLocation: () => void;
 }
 
 export const useLocationStore = create<ILocationState>((set) => ({
@@ -20,5 +21,6 @@ export const useLocationStore = create<ILocationState>((set) => ({
   setLocation: (location) => set({ location }),
   setCity: (city) => set({ city }),
   setCountry: (country) => set({ country }),
-  setCountryCode: (countryCode) => set({ countryCode })
+  setCountryCode: (countryCode) => set({ countryCode }),
+  clearLocation: () => set({ location: null })
 }));

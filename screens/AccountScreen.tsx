@@ -5,11 +5,21 @@ import BottomNavBar from "../components/nav-bar/BottomNavBar";
 import { OptionRow } from "../components/options-row/OptionsRow";
 import UseTypeNavigation from "../hooks/useTypeNavigation";
 import { getAccountOptions } from "../constants/accountOptions";
+import { useLocationStore } from "../stores/useLocationStore";
+import { UseCurrentScreenStore } from "../stores/useCurrentScreenStore";
 
 export default function AccountScreen() {
   const { userData } = useUserStore();
   const navigation = UseTypeNavigation();
-  const listOfOptions = getAccountOptions(navigation);
+  const { clearUserData } = useUserStore();
+  const { clearLocation } = useLocationStore();
+  const { resetCurrentScreen } = UseCurrentScreenStore();
+  const listOfOptions = getAccountOptions(
+    navigation,
+    clearUserData,
+    clearLocation,
+    resetCurrentScreen
+  );
 
   const initials = `${userData?.firstname?.[0] ?? ""}${
     userData?.surname?.[0] ?? ""

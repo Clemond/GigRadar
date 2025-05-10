@@ -15,14 +15,14 @@ async function searchConcertsBase({
   size,
   page,
   genreNames,
-  onlyToday,
+  isOnlyToday,
   keyword
 }: {
   locationParam: string;
   size: number;
   page?: number;
   genreNames?: IGenreName[];
-  onlyToday?: boolean;
+  isOnlyToday: boolean;
   keyword?: string;
 }): Promise<ITicketmasterSearchResponse> {
   const query = [
@@ -35,7 +35,7 @@ async function searchConcertsBase({
     buildPageParam(page),
     buildGenreParam(genreNames),
     buildKeywordParam(keyword),
-    getTodayDateRange(!!onlyToday)
+    getTodayDateRange(isOnlyToday)
   ].join("");
 
   return await Get<ITicketmasterSearchResponse>(query).then(({ data }) => data);
@@ -46,7 +46,7 @@ export function searchConcertsByCity(
   size: number,
   page?: number,
   genreNames?: IGenreName[],
-  onlyToday: boolean = false,
+  isOnlyToday: boolean = false,
   keyword?: string
 ) {
   return searchConcertsBase({
@@ -54,7 +54,7 @@ export function searchConcertsByCity(
     size,
     page,
     genreNames,
-    onlyToday,
+    isOnlyToday,
     keyword
   });
 }
@@ -64,7 +64,7 @@ export function searchConcertsByCountry(
   page: number,
   size: number,
   genreNames?: IGenreName[],
-  onlyToday: boolean = false,
+  isOnlyToday: boolean = false,
   keyword?: string
 ) {
   return searchConcertsBase({
@@ -72,7 +72,7 @@ export function searchConcertsByCountry(
     size,
     page,
     genreNames,
-    onlyToday,
+    isOnlyToday,
     keyword
   });
 }

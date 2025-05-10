@@ -15,3 +15,7 @@ export function buildPageParam(page?: number) {
 export function buildKeywordParam(keyword?: string) {
   return keyword !== undefined ? `&keyword=${keyword}` : "";
 }
+
+export function buildSizeParam(size: number) {
+  return `&size=${size}`;
+}

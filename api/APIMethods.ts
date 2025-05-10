@@ -6,7 +6,8 @@ import { getTodayDateRange } from "../utils/getTodaysDateRange";
 import {
   buildGenreParam,
   buildKeywordParam,
-  buildPageParam
+  buildPageParam,
+  buildSizeParam
 } from "../utils/buildQueryParams";
 
 async function searchConcertsBase({
@@ -30,7 +31,7 @@ async function searchConcertsBase({
     APIConfig.eventType.music,
     APIConfig.fetchOrder.ascending,
     locationParam,
-    `&size=${size}`,
+    buildSizeParam(size),
     buildPageParam(page),
     buildGenreParam(genreNames),
     buildKeywordParam(keyword),

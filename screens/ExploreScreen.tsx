@@ -1,13 +1,20 @@
-import { View, StyleSheet, StatusBar, SafeAreaView } from "react-native";
+import { View, StyleSheet, StatusBar, SafeAreaView, Text } from "react-native";
 import BottomNavBar from "../components/nav-bar/BottomNavBar";
 import SearchBar from "../components/search-bar/SearchBar";
 import FilterChipBar from "../components/filter/FilterChipBar";
 import ConcertGrid from "../components/lists/ConcertGrid";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useLocationStore } from "../stores/useLocationStore";
 
 export default function ExploreScreen() {
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [isTodayChecked, setTodayChecked] = useState<boolean>(false);
+  const { country, city } = useLocationStore();
+
+  useEffect(() => {
+    setTodayChecked(selectedFilters.includes("Nearby"));
+  }, [selectedFilters]);
 
   return (
     <View style={styles.background}>
@@ -20,6 +27,9 @@ export default function ExploreScreen() {
             selectedFilters={selectedFilters}
             setSelectedFilters={setSelectedFilters}
           />
+          <Text style={styles.locationText}>
+            Concerts in {isTodayChecked ? `${city}` : `${country}`}
+          </Text>
           <ConcertGrid
             searchTerm={searchTerm}
             selectedFilters={selectedFilters}
@@ -42,5 +52,9 @@ const styles = StyleSheet.create({
   },
   topContent: {
     flex: 1
+  },
+  locationText: {
+    color: "#8CAFC5",
+    fontSize: 18
   }
 });

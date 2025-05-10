@@ -3,7 +3,11 @@ import { Get } from "./APIUtils";
 import { ITicketmasterSearchResponse } from "../types/ITicketmasterEvent";
 import { IGenreName } from "../types/IGenreName";
 import { getTodayDateRange } from "../utils/getTodaysDateRange";
-import { buildGenreParam, buildPageParam } from "../utils/buildQueryParams";
+import {
+  buildGenreParam,
+  buildKeywordParam,
+  buildPageParam
+} from "../utils/buildQueryParams";
 
 async function searchConcertsBase({
   locationParam,
@@ -22,13 +26,13 @@ async function searchConcertsBase({
 }): Promise<ITicketmasterSearchResponse> {
   const query = [
     `${APIConfig.searchEvents}${APIConfig.key}`,
-    "&classificationName=music",
+    "&classificationName=music", // ! move this to default
     locationParam,
     `&size=${size}`,
     buildPageParam(page),
     buildGenreParam(genreNames),
-    keyword ? `&keyword=${encodeURIComponent(keyword)}` : "",
-    "&sort=date,asc",
+    buildKeywordParam(keyword),
+    "&sort=date,asc", // ! move this to default
     getTodayDateRange(!!onlyToday)
   ].join("");
 

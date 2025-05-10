@@ -25,14 +25,15 @@ async function searchConcertsBase({
   keyword?: string;
 }): Promise<ITicketmasterSearchResponse> {
   const query = [
-    `${APIConfig.searchEvents}${APIConfig.key}`,
-    "&classificationName=music", // ! move this to default
+    APIConfig.searchEvents,
+    APIConfig.key,
+    APIConfig.eventType.music,
+    APIConfig.fetchOrder.ascending,
     locationParam,
     `&size=${size}`,
     buildPageParam(page),
     buildGenreParam(genreNames),
     buildKeywordParam(keyword),
-    "&sort=date,asc", // ! move this to default
     getTodayDateRange(!!onlyToday)
   ].join("");
 

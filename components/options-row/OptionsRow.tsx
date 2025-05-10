@@ -1,9 +1,17 @@
 import { TouchableOpacity, StyleSheet, Text } from "react-native";
 import { Icon } from "react-native-paper";
 
-export function OptionRow({ icon, label }: { icon: string; label: string }) {
+export function OptionRow({
+  icon,
+  label,
+  onPress
+}: {
+  icon: string;
+  label: string;
+  onPress?: () => void;
+}) {
   return (
-    <TouchableOpacity style={styles.optionRow}>
+    <TouchableOpacity style={styles.optionRow} onPress={onPress}>
       <Icon source={icon} size={22} color="#FFF" />
       <Text style={styles.optionText}>{label}</Text>
     </TouchableOpacity>

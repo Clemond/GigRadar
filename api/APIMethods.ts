@@ -32,9 +32,6 @@ async function searchConcertsBase({
     getTodayDateRange(!!onlyToday)
   ].join("");
 
-  console.log("Final query URL:", query);
-  console.log("Keyword passed to searchConcertBase: " + keyword);
-
   return await Get<ITicketmasterSearchResponse>(query).then(({ data }) => data);
 }
 

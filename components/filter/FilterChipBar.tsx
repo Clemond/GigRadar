@@ -2,6 +2,7 @@ import { useState } from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import { Chip } from "react-native-paper";
 import { listOfFilterChips } from "../../constants/listOfFilterChips";
+import FilterModal from "../modals/FilterModal";
 
 interface FilterChipBarProps {
   selectedFilters: string[];
@@ -13,6 +14,10 @@ export default function FilterChipBar({
   setSelectedFilters
 }: FilterChipBarProps) {
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
+
+  function hideModal() {
+    setIsShowModal(false);
+  }
 
   const handleChipPress = (filterName: string, isModal?: boolean) => {
     if (isModal) {
@@ -28,25 +33,28 @@ export default function FilterChipBar({
   };
 
   return (
-    <View style={styles.container}>
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.scrollContent}
-      >
-        {listOfFilterChips.map((item) => (
-          <Chip
-            key={item.name}
-            icon={item.icon}
-            mode="outlined"
-            selected={selectedFilters.includes(item.name)}
-            style={selectedFilters.includes(item.name) && styles.selectedChip}
-            onPress={() => handleChipPress(item.name, item.isModal)}
-          >
-            {item.name}
-          </Chip>
-        ))}
-      </ScrollView>
+    <View>
+      <View style={styles.container}>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.scrollContent}
+        >
+          {listOfFilterChips.map((item) => (
+            <Chip
+              key={item.name}
+              icon={item.icon}
+              mode="outlined"
+              selected={selectedFilters.includes(item.name)}
+              style={selectedFilters.includes(item.name) && styles.selectedChip}
+              onPress={() => handleChipPress(item.name, item.isModal)}
+            >
+              {item.name}
+            </Chip>
+          ))}
+        </ScrollView>
+      </View>
+      <FilterModal visible={isShowModal} hideModal={hideModal} />
     </View>
   );
 }

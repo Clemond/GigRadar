@@ -2,7 +2,8 @@ import {
   ImageBackground,
   Text,
   StyleSheet,
-  TouchableOpacity
+  TouchableOpacity,
+  Alert
 } from "react-native";
 import { Card, Icon } from "react-native-paper";
 import { useEffect, useState } from "react";
@@ -37,7 +38,7 @@ export default function ConcertCard({
         <TouchableOpacity
           style={styles.likeButton}
           onPress={() => {
-            if (!uid) return console.log("No UID found");
+            if (!uid) return Alert.alert("Error", "please try again");
 
             if (isLiked) {
               removeConcertFromFavorites(uid, concert);

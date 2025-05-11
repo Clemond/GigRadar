@@ -1,6 +1,7 @@
 import { doc, updateDoc, arrayUnion } from "firebase/firestore";
 import { db } from "../firebase/firebaseConfig";
 import { ITicketmasterEvent } from "../types/ITicketmasterEvent";
+import { Alert } from "react-native";
 
 export async function addConcertToFavorites(
   uid: string,
@@ -12,8 +13,7 @@ export async function addConcertToFavorites(
     await updateDoc(userRef, {
       favoriteConcerts: arrayUnion(concert)
     });
-    console.log("Concert added to favorites!");
   } catch (error) {
-    console.error("Error adding to favorites:", error);
+    Alert.alert("Error adding to favorites", "please try again");
   }
 }

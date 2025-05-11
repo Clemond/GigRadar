@@ -23,7 +23,8 @@ export function useSignup() {
       const userData: IUserData = {
         email: user.email,
         firstname: user.firstname,
-        surname: user.surname
+        surname: user.surname,
+        favoriteConcerts: []
       };
 
       await setDoc(doc(db, "user_data", uid), userData);

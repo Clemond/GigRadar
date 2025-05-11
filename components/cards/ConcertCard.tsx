@@ -7,6 +7,8 @@ import {
 import { Card, Icon } from "react-native-paper";
 import { useState } from "react";
 import { ITicketmasterEvent } from "../../types/ITicketmasterEvent";
+import { addConcertToFavorites } from "../../firebase/addConcertToFavorites";
+import { getAuth } from "firebase/auth";
 
 export default function ConcertCard({
   concert
@@ -14,6 +16,7 @@ export default function ConcertCard({
   concert: ITicketmasterEvent;
 }) {
   const [isLiked, setIsLiked] = useState<boolean>(false);
+  const uid = getAuth().currentUser?.uid;
 
   return (
     <Card style={styles.card} onPress={() => {}}>
@@ -25,7 +28,14 @@ export default function ConcertCard({
       >
         <TouchableOpacity
           style={styles.likeButton}
-          onPress={() => setIsLiked(!isLiked)}
+          onPress={() => {
+            setIsLiked(!isLiked);
+            if (uid) {
+              addConcertToFavorites(uid, concert);
+            } else {
+              console.log("no UID found");
+            }
+          }}
         >
           <Icon
             size={25}

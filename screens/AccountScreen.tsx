@@ -1,4 +1,10 @@
-import { View, Text, StyleSheet, SafeAreaView } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  SafeAreaView,
+  TouchableOpacity
+} from "react-native";
 import { Avatar, Divider } from "react-native-paper";
 import { useUserStore } from "../stores/useUserStore";
 import BottomNavBar from "../components/nav-bar/BottomNavBar";
@@ -7,6 +13,8 @@ import UseTypeNavigation from "../hooks/useTypeNavigation";
 import { getAccountOptions } from "../constants/listOfAccountOptions.";
 import { useLocationStore } from "../stores/useLocationStore";
 import { UseCurrentScreenStore } from "../stores/useCurrentScreenStore";
+import { getAuth } from "firebase/auth";
+import { useFavorites } from "../hooks/useFavorites";
 
 export default function AccountScreen() {
   const { userData } = useUserStore();
@@ -14,6 +22,9 @@ export default function AccountScreen() {
   const { clearUserData } = useUserStore();
   const { clearLocation } = useLocationStore();
   const { resetCurrentScreen } = UseCurrentScreenStore();
+  const uid = getAuth().currentUser?.uid;
+  const savedConcertListLength = useFavorites(uid).length;
+  const { setCurrentScreen } = UseCurrentScreenStore();
   const listOfOptions = getAccountOptions(
     navigation,
     clearUserData,
@@ -38,10 +49,18 @@ export default function AccountScreen() {
 
         <Divider style={styles.divider} />
 
-        <View style={styles.favoriteCard}>
+        <TouchableOpacity
+          style={styles.favoriteCard}
+          onPress={() => {
+            navigation.navigate("FavoriteScreen");
+            setCurrentScreen("favorite");
+          }}
+        >
           <Text style={styles.favoriteCardNameText}>Saved concerts</Text>
-          <Text style={styles.favoriteCardNameNumber}>5</Text>
-        </View>
+          <Text style={styles.favoriteCardNameNumber}>
+            {savedConcertListLength}
+          </Text>
+        </TouchableOpacity>
 
         <View style={styles.options}>
           {listOfOptions.map((option, index) => (

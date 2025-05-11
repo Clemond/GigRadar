@@ -1,8 +1,16 @@
-import { ImageBackground, Text, StyleSheet } from "react-native";
-import { Card } from "react-native-paper";
+import {
+  ImageBackground,
+  Text,
+  StyleSheet,
+  TouchableOpacity
+} from "react-native";
+import { Card, Icon } from "react-native-paper";
 import { IConcertCard } from "../../types/IConcertCard";
+import { useState } from "react";
 
 export default function ConcertCard({ concert }: { concert: IConcertCard }) {
+  const [isLiked, setIsLiked] = useState<boolean>(false);
+
   return (
     <Card style={styles.card} onPress={() => {}}>
       <ImageBackground
@@ -11,7 +19,17 @@ export default function ConcertCard({ concert }: { concert: IConcertCard }) {
         style={styles.cardBackgroundImage}
         resizeMode="cover"
       >
-        <Card.Content>
+        <TouchableOpacity
+          style={styles.likeButton}
+          onPress={() => setIsLiked(!isLiked)}
+        >
+          <Icon
+            size={25}
+            source={isLiked ? "heart" : "heart-outline"}
+            color="#F77E32"
+          />
+        </TouchableOpacity>
+        <Card.Content style={styles.cardText}>
           <Text style={styles.cardTitle}>{concert.artist}</Text>
           <Text style={styles.cardSubtitle}>{concert.city}</Text>
           <Text style={styles.cardSubtitle}>{concert.date}</Text>
@@ -32,11 +50,19 @@ const styles = StyleSheet.create({
   },
   cardBackgroundImage: {
     width: "100%",
-    height: "100%",
+    height: "100%"
+  },
+  likeButton: {
+    marginLeft: 2,
+    alignSelf: "flex-start"
+  },
+  cardText: {
+    flex: 1,
     justifyContent: "center",
     alignItems: "center"
   },
   cardTitle: {
+    textAlign: "center",
     color: "#FFFFFF",
     fontSize: 18,
     fontWeight: "bold"

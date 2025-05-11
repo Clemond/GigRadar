@@ -1,10 +1,11 @@
 import { View, StyleSheet, FlatList, Text } from "react-native";
 import { useLocationStore } from "../../stores/useLocationStore";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { mapToConcertCard } from "../../utils/eventMapper";
 import ConcertCard from "../cards/ConcertCard";
-import { ITicketmasterSearchResponse } from "../../types/ITicketmasterEvent";
-import { IConcertCard } from "../../types/IConcertCard";
+import {
+  ITicketmasterEvent,
+  ITicketmasterSearchResponse
+} from "../../types/ITicketmasterEvent";
 import { ActivityIndicator } from "react-native-paper";
 import { deduplicateConcerts } from "../../utils/deduplicateConcerts";
 import { getNextPageParam } from "../../utils/getNextPageParam";
@@ -50,10 +51,8 @@ export default function ConcertGrid({
       })
   });
 
-  const allConcerts: IConcertCard[] = deduplicateConcerts(
-    concertList?.pages.flatMap((page) =>
-      (page._embedded?.events ?? []).map(mapToConcertCard)
-    ) ?? []
+  const allConcerts: ITicketmasterEvent[] = deduplicateConcerts(
+    concertList?.pages.flatMap((page) => page._embedded?.events ?? []) ?? []
   );
 
   const handleEndReached = () => {

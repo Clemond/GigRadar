@@ -5,16 +5,20 @@ import {
   TouchableOpacity
 } from "react-native";
 import { Card, Icon } from "react-native-paper";
-import { IConcertCard } from "../../types/IConcertCard";
 import { useState } from "react";
+import { ITicketmasterEvent } from "../../types/ITicketmasterEvent";
 
-export default function ConcertCard({ concert }: { concert: IConcertCard }) {
+export default function ConcertCard({
+  concert
+}: {
+  concert: ITicketmasterEvent;
+}) {
   const [isLiked, setIsLiked] = useState<boolean>(false);
 
   return (
     <Card style={styles.card} onPress={() => {}}>
       <ImageBackground
-        source={concert.img}
+        source={{ uri: concert.images?.[0].url }}
         imageStyle={{ opacity: 0.5 }}
         style={styles.cardBackgroundImage}
         resizeMode="cover"
@@ -30,9 +34,15 @@ export default function ConcertCard({ concert }: { concert: IConcertCard }) {
           />
         </TouchableOpacity>
         <Card.Content style={styles.cardText}>
-          <Text style={styles.cardTitle}>{concert.artist}</Text>
-          <Text style={styles.cardSubtitle}>{concert.city}</Text>
-          <Text style={styles.cardSubtitle}>{concert.date}</Text>
+          <Text style={styles.cardTitle}>
+            {concert._embedded?.attractions?.[0].name}
+          </Text>
+          <Text style={styles.cardSubtitle}>
+            {concert._embedded?.venues?.[0].city?.name}
+          </Text>
+          <Text style={styles.cardSubtitle}>
+            {concert.dates?.start?.localDate}
+          </Text>
         </Card.Content>
       </ImageBackground>
     </Card>

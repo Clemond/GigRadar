@@ -10,7 +10,6 @@ import { UseCurrentScreenStore } from "../../stores/useCurrentScreenStore";
 import ConcertCard from "../cards/ConcertCard";
 import { useLocationStore } from "../../stores/useLocationStore";
 import { searchConcertsByCity } from "../../api/APIMethods";
-import { mapToConcertCard } from "../../utils/eventMapper";
 import { useQuery } from "@tanstack/react-query";
 
 export default function ConcertList() {
@@ -27,7 +26,7 @@ export default function ConcertList() {
     queryFn: async () => {
       if (!city) return;
       const events = await searchConcertsByCity(city, 10);
-      return events._embedded?.events.map(mapToConcertCard) ?? [];
+      return events._embedded?.events ?? [];
     },
     enabled: !!city
   });

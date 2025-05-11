@@ -5,10 +5,12 @@ import {
   TouchableOpacity
 } from "react-native";
 import { Card, Icon } from "react-native-paper";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ITicketmasterEvent } from "../../types/ITicketmasterEvent";
 import { addConcertToFavorites } from "../../firebase/addConcertToFavorites";
 import { getAuth } from "firebase/auth";
+import { isConcertFavorited } from "../../firebase/isConcertFavorited";
+import { removeConcertFromFavorites } from "../../firebase/removeConcertFromFavorites";
 
 export default function ConcertCard({
   concert
@@ -17,6 +19,12 @@ export default function ConcertCard({
 }) {
   const [isLiked, setIsLiked] = useState<boolean>(false);
   const uid = getAuth().currentUser?.uid;
+
+  useEffect(() => {
+    if (uid) {
+      isConcertFavorited(uid, concert.id).then(setIsLiked);
+    }
+  }, [uid, concert.id]);
 
   return (
     <Card style={styles.card} onPress={() => {}}>
@@ -29,12 +37,15 @@ export default function ConcertCard({
         <TouchableOpacity
           style={styles.likeButton}
           onPress={() => {
-            setIsLiked(!isLiked);
-            if (uid) {
-              addConcertToFavorites(uid, concert);
+            if (!uid) return console.log("No UID found");
+
+            if (isLiked) {
+              removeConcertFromFavorites(uid, concert);
             } else {
-              console.log("no UID found");
+              addConcertToFavorites(uid, concert);
             }
+
+            setIsLiked(!isLiked);
           }}
         >
           <Icon

@@ -12,8 +12,8 @@ export const listOfNavBarButtons: {
   },
   {
     icon: "heart-outline",
-    screen: "heart",
-    navigationName: "HomeScreen" // Change this later when the screen in created
+    screen: "favorite",
+    navigationName: "FavoriteScreen"
   },
   {
     icon: "magnify",

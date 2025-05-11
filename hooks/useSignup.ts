@@ -2,14 +2,14 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { auth } from "../firebase/firebaseConfig";
 import { db } from "../firebase/firebaseConfig";
-import { IUser } from "../types/IUser";
+import { IRegistrationData } from "../types/IRegistrationData";
 import { IUserData } from "../types/IUserData";
 import { useState } from "react";
 
 export function useSignup() {
   const [loading, setLoading] = useState(false);
 
-  const signUp = async (user: IUser) => {
+  const signUp = async (user: IRegistrationData) => {
     setLoading(true);
 
     try {
@@ -23,7 +23,8 @@ export function useSignup() {
       const userData: IUserData = {
         email: user.email,
         firstname: user.firstname,
-        surname: user.surname
+        surname: user.surname,
+        favoriteConcerts: []
       };
 
       await setDoc(doc(db, "user_data", uid), userData);

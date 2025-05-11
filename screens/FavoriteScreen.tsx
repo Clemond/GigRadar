@@ -1,7 +1,15 @@
-import { View, StyleSheet, StatusBar, SafeAreaView, Text } from "react-native";
+import {
+  View,
+  StyleSheet,
+  StatusBar,
+  SafeAreaView,
+  Text,
+  FlatList
+} from "react-native";
 import BottomNavBar from "../components/nav-bar/BottomNavBar";
 import { getAuth } from "@firebase/auth";
 import { useFavorites } from "../hooks/useFavorites";
+import ConcertCard from "../components/cards/ConcertCard";
 
 export default function FavoriteScreen() {
   const uid = getAuth().currentUser?.uid;
@@ -11,16 +19,20 @@ export default function FavoriteScreen() {
     <View style={styles.background}>
       <StatusBar barStyle="light-content" backgroundColor="#061A1E" />
       <SafeAreaView style={styles.safeArea}>
-        <View style={styles.topContent}>
-          <Text>Favorites Screen</Text>
-          {favorites.length > 0 ? (
-            favorites.map((concert) => (
-              <Text key={concert.id}>{concert.name}</Text>
-            ))
-          ) : (
-            <Text>No favorite concerts yet.</Text>
-          )}
-        </View>
+        <Text style={styles.title}>Your Saved Concerts</Text>
+        {favorites.length > 0 ? (
+          <FlatList
+            data={favorites}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => <ConcertCard concert={item} />}
+            numColumns={2}
+            contentContainerStyle={styles.grid}
+          />
+        ) : (
+          <View style={styles.emptyState}>
+            <Text style={styles.emptyText}>No favorites yet </Text>
+          </View>
+        )}
       </SafeAreaView>
       <BottomNavBar />
     </View>
@@ -36,7 +48,22 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 15
   },
-  topContent: {
-    flex: 1
+  title: {
+    color: "#FFF",
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 10
+  },
+  grid: {
+    alignItems: "center"
+  },
+  emptyState: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  emptyText: {
+    color: "#A7BBC7",
+    fontSize: 16
   }
 });

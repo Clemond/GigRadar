@@ -57,7 +57,7 @@ export default function ConcertCard({
         </TouchableOpacity>
         <Card.Content style={styles.cardText}>
           <Text style={styles.cardTitle}>
-            {concert._embedded?.attractions?.[0].name}
+            {concert._embedded?.attractions?.[0].name ?? "TBA"}
           </Text>
           <Text style={styles.cardSubtitle}>
             {concert._embedded?.venues?.[0].city?.name}

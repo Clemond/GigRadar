@@ -1,4 +1,11 @@
-import { Divider, List, Modal, Portal, RadioButton } from "react-native-paper";
+import {
+  Chip,
+  Divider,
+  List,
+  Modal,
+  Portal,
+  RadioButton
+} from "react-native-paper";
 import { Text, StyleSheet, View } from "react-native";
 import { AVAILABLE_GENRES } from "../../constants/genres";
 
@@ -32,12 +39,19 @@ export default function FilterModal({
         <View style={styles.filterHeader}>
           <Text style={styles.headerTitle}>Filter</Text>
           <Divider style={styles.divider} />
+          <Text style={{ fontWeight: "bold" }}>
+            {selectedFilters.length !== 0 && "Selected filters"}
+          </Text>
+          <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
+            {selectedFilters.map((filter, index) => (
+              <Chip key={index} mode="outlined">
+                {filter}
+              </Chip>
+            ))}
+          </View>
         </View>
         <List.AccordionGroup>
-          <List.Accordion
-            title={`Genre  ${selectedFilters.map((filter) => ` ${filter}`)}`}
-            id="1"
-          >
+          <List.Accordion title="Genre" id="1">
             {AVAILABLE_GENRES.map((genre, index) => (
               <View key={index} style={styles.listItem}>
                 <List.Item title={genre} />
@@ -51,10 +65,7 @@ export default function FilterModal({
               </View>
             ))}
           </List.Accordion>
-          <List.Accordion
-            title={`Date  ${selectedFilters.map((filter) => ` ${filter}`)}`}
-            id="2"
-          >
+          <List.Accordion title="Date" id="2">
             <View style={styles.listItem}>
               <List.Item title={"Concert's Today"} />
               <RadioButton

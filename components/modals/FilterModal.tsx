@@ -51,6 +51,21 @@ export default function FilterModal({
               </View>
             ))}
           </List.Accordion>
+          <List.Accordion
+            title={`Date  ${selectedFilters.map((filter) => ` ${filter}`)}`}
+            id="2"
+          >
+            <View style={styles.listItem}>
+              <List.Item title={"Concert's Today"} />
+              <RadioButton
+                value={"Today"}
+                status={
+                  selectedFilters.includes("Today") ? "checked" : "unchecked"
+                }
+                onPress={() => toggleGenre("Today")}
+              />
+            </View>
+          </List.Accordion>
         </List.AccordionGroup>
       </Modal>
     </Portal>

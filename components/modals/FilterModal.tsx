@@ -6,13 +6,20 @@ import { useState } from "react";
 interface filterModalProps {
   visible: boolean;
   hideModal: () => void;
+  selectedFilters: string[];
+  setSelectedFilters: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-export default function FilterModal({ visible, hideModal }: filterModalProps) {
-  const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
+export default function FilterModal({
+  visible,
+  hideModal,
+  selectedFilters,
+  setSelectedFilters
+}: filterModalProps) {
+  //const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
 
   const toggleGenre = (genre: string) => {
-    setSelectedGenres((prev) =>
+    setSelectedFilters((prev) =>
       prev.includes(genre) ? prev.filter((g) => g !== genre) : [...prev, genre]
     );
   };
@@ -37,7 +44,7 @@ export default function FilterModal({ visible, hideModal }: filterModalProps) {
                 <RadioButton
                   value={genre}
                   status={
-                    selectedGenres.includes(genre) ? "checked" : "unchecked"
+                    selectedFilters.includes(genre) ? "checked" : "unchecked"
                   }
                   onPress={() => toggleGenre(genre)}
                 />

@@ -54,7 +54,12 @@ export default function FilterChipBar({
           ))}
         </ScrollView>
       </View>
-      <FilterModal visible={isShowModal} hideModal={hideModal} />
+      <FilterModal
+        visible={isShowModal}
+        hideModal={hideModal}
+        selectedFilters={selectedFilters}
+        setSelectedFilters={setSelectedFilters}
+      />
     </View>
   );
 }

@@ -47,7 +47,15 @@ export default function FilterModal({
           <Text style={{ fontWeight: "bold" }}>
             {selectedFilters.length !== 0 && "Selected filters"}
           </Text>
-          <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
+
+          <View
+            style={{
+              flexDirection: "row",
+              flexWrap: "wrap",
+              gap: 5,
+              margin: 5
+            }}
+          >
             {selectedFilters.map((filter, index) => (
               <Chip key={index} mode="outlined">
                 {filter}
@@ -55,6 +63,7 @@ export default function FilterModal({
             ))}
           </View>
         </View>
+
         <List.AccordionGroup>
           <List.Accordion title="Genre" id="1">
             {AVAILABLE_GENRES.map((genre, index) => (

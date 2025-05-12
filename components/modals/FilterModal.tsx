@@ -4,7 +4,8 @@ import {
   List,
   Modal,
   Portal,
-  RadioButton
+  RadioButton,
+  Button
 } from "react-native-paper";
 import { Text, StyleSheet, View } from "react-native";
 import { AVAILABLE_GENRES } from "../../constants/genres";
@@ -104,6 +105,9 @@ export default function FilterModal({
             </View>
           </List.Accordion>
         </List.AccordionGroup>
+        {selectedFilters.length !== 0 && (
+          <Button onPress={() => setSelectedFilters([])}>Reset</Button>
+        )}
       </Modal>
     </Portal>
   );

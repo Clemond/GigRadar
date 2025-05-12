@@ -1,5 +1,5 @@
-import { Modal, Portal } from "react-native-paper";
-import { Text, StyleSheet } from "react-native";
+import { Divider, Modal, Portal } from "react-native-paper";
+import { Text, StyleSheet, View } from "react-native";
 
 interface filterModalProps {
   visible: boolean;
@@ -14,7 +14,10 @@ export default function FilterModal({ visible, hideModal }: filterModalProps) {
         onDismiss={hideModal}
         contentContainerStyle={styles.containerStyle}
       >
-        <Text>Example filter Modal. Click outside this area to dismiss.</Text>
+        <View style={styles.filterHeader}>
+          <Text style={styles.headerTitle}>Filter</Text>
+          <Divider style={styles.divider} />
+        </View>
       </Modal>
     </Portal>
   );
@@ -22,11 +25,21 @@ export default function FilterModal({ visible, hideModal }: filterModalProps) {
 
 const styles = StyleSheet.create({
   containerStyle: {
+    width: "80%",
     backgroundColor: "white",
-    margin: 20,
     padding: 20,
     borderRadius: 10,
-    maxHeight: 500,
     alignSelf: "center"
+  },
+  filterHeader: {
+    alignItems: "center"
+  },
+  headerTitle: {
+    fontSize: 20
+  },
+  divider: {
+    marginVertical: 10,
+    width: "100%",
+    backgroundColor: "#8CAFC5"
   }
 });

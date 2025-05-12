@@ -1,7 +1,6 @@
 import { Divider, List, Modal, Portal, RadioButton } from "react-native-paper";
 import { Text, StyleSheet, View } from "react-native";
 import { AVAILABLE_GENRES } from "../../constants/genres";
-import { useState } from "react";
 
 interface filterModalProps {
   visible: boolean;
@@ -16,8 +15,6 @@ export default function FilterModal({
   selectedFilters,
   setSelectedFilters
 }: filterModalProps) {
-  //const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
-
   const toggleGenre = (genre: string) => {
     setSelectedFilters((prev) =>
       prev.includes(genre) ? prev.filter((g) => g !== genre) : [...prev, genre]
@@ -37,7 +34,10 @@ export default function FilterModal({
           <Divider style={styles.divider} />
         </View>
         <List.AccordionGroup>
-          <List.Accordion title="Genre" id="1">
+          <List.Accordion
+            title={`Genre  ${selectedFilters.map((filter) => ` ${filter}`)}`}
+            id="1"
+          >
             {AVAILABLE_GENRES.map((genre, index) => (
               <View key={index} style={styles.listItem}>
                 <List.Item title={genre} />

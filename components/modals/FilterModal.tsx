@@ -8,6 +8,7 @@ import {
 } from "react-native-paper";
 import { Text, StyleSheet, View } from "react-native";
 import { AVAILABLE_GENRES } from "../../constants/genres";
+import { useLocationStore } from "../../stores/useLocationStore";
 
 interface filterModalProps {
   visible: boolean;
@@ -22,11 +23,15 @@ export default function FilterModal({
   selectedFilters,
   setSelectedFilters
 }: filterModalProps) {
+  const { city } = useLocationStore();
+
   const toggleGenre = (genre: string) => {
     setSelectedFilters((prev) =>
       prev.includes(genre) ? prev.filter((g) => g !== genre) : [...prev, genre]
     );
   };
+
+  if (!city) return;
 
   return (
     <Portal>
@@ -74,6 +79,18 @@ export default function FilterModal({
                   selectedFilters.includes("Today") ? "checked" : "unchecked"
                 }
                 onPress={() => toggleGenre("Today")}
+              />
+            </View>
+          </List.Accordion>
+          <List.Accordion title="Location" id="3">
+            <View style={styles.listItem}>
+              <List.Item title={"In your city"} />
+              <RadioButton
+                value={city}
+                status={
+                  selectedFilters.includes("Nearby") ? "checked" : "unchecked"
+                }
+                onPress={() => toggleGenre("Nearby")}
               />
             </View>
           </List.Accordion>

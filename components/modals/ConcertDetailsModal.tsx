@@ -8,6 +8,7 @@ import {
   ScrollView
 } from "react-native";
 import { ITicketmasterEvent } from "../../types/ITicketmasterEvent";
+import { addConcertToCalendar } from "../../utils/addConcertToCalender";
 
 interface ConcertDetailsModalProps {
   visible: boolean;
@@ -76,6 +77,15 @@ export default function ConcertDetailsModal({
                 concert.pleaseNote ||
                 "No additional information available."}
             </Text>
+
+            <Button
+              mode="outlined"
+              onPress={() => addConcertToCalendar(concert)}
+              style={{ marginTop: 10, borderColor: "#F77E32" }}
+              labelStyle={{ color: "#F77E32" }}
+            >
+              Add to Calendar
+            </Button>
 
             <Button
               mode="contained"

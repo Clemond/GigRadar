@@ -48,11 +48,14 @@ export default function ConcertDetailsModal({
 
           <View style={styles.timeAndPlace}>
             <Text style={styles.label}>
-              {concert._embedded?.venues?.[0]?.name}
+              {concert._embedded?.venues?.[0]?.name ??
+                "Venue name is currently unavailable"}
             </Text>
             <View style={{ flexDirection: "row", gap: 5 }}>
               <Text style={styles.label}>
-                {concert._embedded?.venues?.[0]?.city?.name},
+                {concert._embedded?.venues?.[0]?.city?.name ??
+                  "City is currently unavailable"}
+                ,
               </Text>
 
               <Text style={styles.label}>
@@ -81,7 +84,7 @@ export default function ConcertDetailsModal({
             <Button
               mode="outlined"
               onPress={() => addConcertToCalendar(concert)}
-              style={{ marginTop: 10, borderColor: "#F77E32" }}
+              style={styles.calenderButton}
               labelStyle={{ color: "#F77E32" }}
             >
               Add to Calendar
@@ -144,5 +147,6 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     paddingHorizontal: 10,
     alignItems: "center"
-  }
+  },
+  calenderButton: { marginTop: 10, borderColor: "#F77E32" }
 });

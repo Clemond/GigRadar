@@ -6,6 +6,7 @@ import ExploreScreen from "../screens/ExploreScreen";
 import RegisterScreen from "../screens/RegisterScreen";
 import AccountScreen from "../screens/AccountScreen";
 import FavoriteScreen from "../screens/FavoriteScreen";
+import EditAccountScreen from "../screens/EditAccountScreen";
 
 export default function RootStack() {
   const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -24,6 +25,7 @@ export default function RootStack() {
       <Stack.Screen name="ExploreScreen" component={ExploreScreen} />
       <Stack.Screen name="AccountScreen" component={AccountScreen} />
       <Stack.Screen name="FavoriteScreen" component={FavoriteScreen} />
+      <Stack.Screen name="EditAccountScreen" component={EditAccountScreen} />
     </Stack.Navigator>
   );
 }

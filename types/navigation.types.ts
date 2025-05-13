@@ -5,4 +5,5 @@ export type RootStackParamList = {
   ExploreScreen: undefined;
   AccountScreen: undefined;
   FavoriteScreen: undefined;
+  EditAccountScreen: undefined;
 };

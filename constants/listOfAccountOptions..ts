@@ -16,7 +16,9 @@ export function getAccountOptions(
     {
       icon: "account-edit",
       label: "Edit Profile",
-      onPress: () => {}
+      onPress: () => {
+        navigation.navigate("EditAccountScreen");
+      }
     },
     {
       icon: "calendar-check",

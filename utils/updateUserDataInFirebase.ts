@@ -9,6 +9,6 @@ export async function updateUserDataInFirebase(data: {
   const user = getAuth().currentUser;
   if (!user) throw new Error("No user logged in");
 
-  const userRef = doc(db, "users", user.uid);
+  const userRef = doc(db, "user_data", user.uid);
   await updateDoc(userRef, data);
 }

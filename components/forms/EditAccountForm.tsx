@@ -9,8 +9,9 @@ import {
 } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 import { useSignup } from "../../hooks/useSignup";
-import { setUserDataFromFirebase } from "../../utils/setUserDataFromFirebase";
+import { updateUserDataInFirebase } from "../../utils/updateUserDataInFirebase";
 import UseTypeNavigation from "../../hooks/useTypeNavigation";
+import { useUserStore } from "../../stores/useUserStore";
 
 export default function EditAccountForm({
   setSnackbarMsg,
@@ -19,14 +20,37 @@ export default function EditAccountForm({
   setSnackbarMsg: (msg: string) => void;
   setIsSnackbarVisible: (boolean: boolean) => void;
 }) {
-  const navigation = UseTypeNavigation();
-  const [firstname, setFirstname] = useState<string>("");
-  const [surname, setSurname] = useState<string>("");
-  const { signUp, loading } = useSignup();
+  const { userData, setUserData } = useUserStore();
 
+  const navigation = UseTypeNavigation();
+  const [firstname, setFirstname] = useState<string>(userData?.firstname || "");
+  const [surname, setSurname] = useState<string>(userData?.surname || "");
+  const [loading, setLoading] = useState(false);
+
+  const handleUpdate = async () => {
+    Keyboard.dismiss();
+    if (!firstname.trim() || !surname.trim()) {
+      setSnackbarMsg("Both fields are required");
+      setIsSnackbarVisible(true);
+      return;
+    }
+
+    try {
+      setLoading(true);
+      await updateUserDataInFirebase({ firstname, surname });
+      setUserData({ ...userData!, firstname, surname });
+      setSnackbarMsg("Profile updated");
+      navigation.navigate("AccountScreen");
+    } catch {
+      setSnackbarMsg("Update failed");
+    } finally {
+      setIsSnackbarVisible(true);
+      setLoading(false);
+    }
+  };
   return (
     <View style={styles.card}>
-      <Text style={styles.headerText}>Profile</Text>
+      <Text style={styles.headerText}>Update Profile</Text>
 
       <TextInput
         style={styles.input}
@@ -47,16 +71,16 @@ export default function EditAccountForm({
         autoCapitalize="none"
       />
 
-      <TouchableOpacity onPress={() => navigation.navigate("SigninScreen")}>
+      <TouchableOpacity onPress={() => navigation.navigate("AccountScreen")}>
         <Text style={styles.smallText}>Go back without saving</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.loginButton} onPress={() => {}}>
+      <TouchableOpacity style={styles.loginButton} onPress={handleUpdate}>
         <Text style={styles.buttonText}>
           {loading ? (
             <ActivityIndicator animating={true} color="#2a2232" />
           ) : (
-            "Update profile"
+            "Save changes"
           )}
         </Text>
       </TouchableOpacity>

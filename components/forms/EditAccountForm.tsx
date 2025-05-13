@@ -8,7 +8,6 @@ import {
   Keyboard
 } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
-import { useSignup } from "../../hooks/useSignup";
 import { updateUserDataInFirebase } from "../../utils/updateUserDataInFirebase";
 import UseTypeNavigation from "../../hooks/useTypeNavigation";
 import { useUserStore } from "../../stores/useUserStore";

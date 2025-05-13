@@ -9,7 +9,7 @@ export async function loadUserLocation() {
   const { status } = await Location.requestForegroundPermissionsAsync();
   if (status !== "granted") {
     Alert.alert(
-      "Location PErmission Denied",
+      "Location Permission Denied",
       "We couldn't access your location, Concerts near you may not be shown",
       [{ text: "OK" }]
     );

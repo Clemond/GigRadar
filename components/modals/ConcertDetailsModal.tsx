@@ -40,25 +40,41 @@ export default function ConcertDetailsModal({
           >
             <View style={styles.overlay}>
               <Text style={styles.headerTitle}>
-                {concert._embedded?.attractions?.[0]?.name}
+                {concert._embedded?.attractions?.[0]?.name ?? "TBA"}
               </Text>
             </View>
           </ImageBackground>
 
+          <View style={styles.timeAndPlace}>
+            <Text style={styles.label}>
+              {concert._embedded?.venues?.[0]?.name}
+            </Text>
+            <View style={{ flexDirection: "row", gap: 5 }}>
+              <Text style={styles.label}>
+                {concert._embedded?.venues?.[0]?.city?.name},
+              </Text>
+
+              <Text style={styles.label}>
+                {concert._embedded?.venues?.[0]?.state?.name}
+              </Text>
+            </View>
+
+            <View style={{ flexDirection: "row", gap: 10 }}>
+              <Text style={styles.label}>{concert.dates.start.localDate}</Text>
+
+              <Text style={styles.label}>
+                {concert.dates.start.localTime?.slice(0, 5)}
+              </Text>
+            </View>
+          </View>
+
           <View style={styles.content}>
             <Divider style={styles.divider} />
-
             <Text style={styles.label}>
-              📍 {concert._embedded?.venues?.[0]?.city?.name}
-            </Text>
-            <Text style={styles.label}>📅 {concert.dates.start.localDate}</Text>
-            {concert.dates.start.localTime && (
-              <Text style={styles.label}>
-                🕒 {concert.dates.start.localTime}
-              </Text>
-            )}
-            <Text style={styles.label}>
-              🏛️ {concert._embedded?.venues?.[0]?.name}
+              {concert.description ||
+                concert.info ||
+                concert.pleaseNote ||
+                "No additional information available."}
             </Text>
 
             <Button
@@ -78,8 +94,7 @@ export default function ConcertDetailsModal({
 const styles = StyleSheet.create({
   containerStyle: {
     width: "90%",
-    height: "80%",
-    backgroundColor: "white",
+    backgroundColor: "#061A1E",
     borderRadius: 10,
     alignSelf: "center"
   },
@@ -98,7 +113,7 @@ const styles = StyleSheet.create({
     color: "white"
   },
   content: {
-    padding: 20
+    paddingHorizontal: 20
   },
   divider: {
     marginVertical: 10,
@@ -106,10 +121,18 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 16,
-    marginBottom: 6
+    marginBottom: 6,
+    color: "#A7BBC7",
+    textAlign: "center"
   },
   ticketButton: {
     marginTop: 20,
-    backgroundColor: "#1E88E5"
+    backgroundColor: "#F77E32",
+    marginBottom: 20
+  },
+  timeAndPlace: {
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    alignItems: "center"
   }
 });

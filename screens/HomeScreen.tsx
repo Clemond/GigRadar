@@ -1,10 +1,9 @@
 import { View, Text, StyleSheet, StatusBar } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import ConcertList from "../components/lists/ConcertList";
+import ConcertList from "../components/layouts/ConcertList";
 import BottomNavBar from "../components/nav-bar/BottomNavBar";
 import { useUserStore } from "../stores/useUserStore";
 import { useLocationStore } from "../stores/useLocationStore";
-import SearchBar from "../components/search-bar/SearchBar";
 
 export default function HomeScreen() {
   const { userData } = useUserStore();
@@ -16,7 +15,7 @@ export default function HomeScreen() {
       <SafeAreaView style={styles.container}>
         <Text style={styles.greetingTitle}>Hello, {userData?.firstname}</Text>
         <Text style={styles.greeting}>Good to see you again!</Text>
-        <SearchBar />
+
         <Text style={styles.sectionTitle}>Concerts in {city}</Text>
         <ConcertList />
       </SafeAreaView>

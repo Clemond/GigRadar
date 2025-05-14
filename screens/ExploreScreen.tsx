@@ -2,7 +2,7 @@ import { View, StyleSheet, StatusBar, SafeAreaView, Text } from "react-native";
 import BottomNavBar from "../components/nav-bar/BottomNavBar";
 import SearchBar from "../components/search-bar/SearchBar";
 import FilterChipBar from "../components/filter/FilterChipBar";
-import ConcertGrid from "../components/lists/ConcertGrid";
+import ConcertGrid from "../components/layouts/ConcertGrid";
 import { useEffect, useState } from "react";
 import { useLocationStore } from "../stores/useLocationStore";
 

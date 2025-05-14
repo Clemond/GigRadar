@@ -1,24 +1,29 @@
 import { View, Text, StyleSheet, StatusBar } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import ConcertList from "../components/lists/ConcertList";
+import ConcertList from "../components/layouts/ConcertList";
 import BottomNavBar from "../components/nav-bar/BottomNavBar";
 import { useUserStore } from "../stores/useUserStore";
 import { useLocationStore } from "../stores/useLocationStore";
-import SearchBar from "../components/search-bar/SearchBar";
+import ExploreGenresGrid from "../components/layouts/ExploreGenresGrid";
 
 export default function HomeScreen() {
   const { userData } = useUserStore();
   const { city } = useLocationStore();
+  const hour = new Date().getHours();
+  const timeOfDay = hour < 12 ? "morning" : hour < 18 ? "afternoon" : "evening";
 
   return (
     <View style={styles.background}>
       <StatusBar barStyle="light-content" backgroundColor="#061A1E" />
       <SafeAreaView style={styles.container}>
-        <Text style={styles.greetingTitle}>Hello, {userData?.firstname}</Text>
+        <Text style={styles.greetingTitle}>
+          Good {timeOfDay}, {userData?.firstname}
+        </Text>
         <Text style={styles.greeting}>Good to see you again!</Text>
-        <SearchBar />
         <Text style={styles.sectionTitle}>Concerts in {city}</Text>
         <ConcertList />
+        <Text style={styles.sectionTitle}>Popular Genres</Text>
+        <ExploreGenresGrid />
       </SafeAreaView>
       <BottomNavBar />
     </View>
@@ -32,7 +37,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 20,
-    paddingVertical: 15
+    paddingVertical: 10
   },
   greetingTitle: {
     color: "#FFFFFF",
@@ -48,7 +53,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 18,
     color: "#8CAFC5",
-    marginBottom: 10,
+    marginVertical: 10,
     fontWeight: "600"
   }
 });

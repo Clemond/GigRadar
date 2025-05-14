@@ -20,7 +20,7 @@ const genreImages: Record<string, any> = {
   country: require("../../assets/country-genre.jpg")
 };
 
-export default function ExploreGenreCard({
+export default function PopularGenreCard({
   genre,
   image
 }: ExploreGenreCardProps) {
@@ -33,8 +33,8 @@ export default function ExploreGenreCard({
           style={styles.cardBackgroundImage}
           resizeMode="cover"
         >
-          <Card.Content style={styles.cardText}>
-            <Text style={styles.cardTitle}>{genre}</Text>
+          <Card.Content style={styles.cardContentText}>
+            <Text style={styles.cardText}>{genre}</Text>
           </Card.Content>
         </ImageBackground>
       </TouchableOpacity>
@@ -55,16 +55,12 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%"
   },
-  likeButton: {
-    marginLeft: 2,
-    alignSelf: "flex-start"
-  },
-  cardText: {
+  cardContentText: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center"
   },
-  cardTitle: {
+  cardText: {
     textAlign: "center",
     color: "#FFFFFF",
     fontSize: 15,

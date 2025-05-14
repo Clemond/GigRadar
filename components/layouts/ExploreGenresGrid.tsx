@@ -27,7 +27,7 @@ export default function ExploreGenresGrid() {
 
 const styles = StyleSheet.create({
   recommendedCard: {
-    justifyContent: "space-evenly",
+    justifyContent: "center",
     borderColor: "#8CAFC5",
     borderRadius: 10,
     flexDirection: "row"

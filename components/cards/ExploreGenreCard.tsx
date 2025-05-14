@@ -18,8 +18,6 @@ const genreImages: Record<string, any> = {
   electronic: require("../../assets/electronic-genre.jpg"),
   classical: require("../../assets/classical-genre.jpg"),
   country: require("../../assets/country-genre.jpg")
-
-  // ! add more as needed
 };
 
 export default function ExploreGenreCard({
@@ -50,8 +48,8 @@ const styles = StyleSheet.create({
     margin: 10,
     borderRadius: 10,
     overflow: "hidden",
-    width: 75,
-    height: 75
+    width: 90,
+    height: 70
   },
   cardBackgroundImage: {
     width: "100%",
@@ -69,10 +67,7 @@ const styles = StyleSheet.create({
   cardTitle: {
     textAlign: "center",
     color: "#FFFFFF",
-    fontSize: 18,
+    fontSize: 15,
     fontWeight: "bold"
-  },
-  cardSubtitle: {
-    color: "#A7BBC7"
   }
 });

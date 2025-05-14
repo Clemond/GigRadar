@@ -56,7 +56,6 @@ export default function ConcertList() {
 
 const styles = StyleSheet.create({
   recommendedCard: {
-    borderWidth: 1,
     borderColor: "#8CAFC5",
     borderRadius: 10
   },
@@ -64,7 +63,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#F77E32",
     padding: 15,
     borderRadius: 10,
-    marginTop: 20,
+    marginTop: 10,
     alignItems: "center",
     margin: 5
   },

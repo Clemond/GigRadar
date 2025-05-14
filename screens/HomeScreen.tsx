@@ -4,8 +4,8 @@ import ConcertList from "../components/layouts/ConcertList";
 import BottomNavBar from "../components/nav-bar/BottomNavBar";
 import { useUserStore } from "../stores/useUserStore";
 import { useLocationStore } from "../stores/useLocationStore";
-
 import PopularGenresGrid from "../components/layouts/PopularGenresGrid";
+
 
 export default function HomeScreen() {
   const { userData } = useUserStore();
@@ -24,7 +24,9 @@ export default function HomeScreen() {
         <Text style={styles.sectionTitle}>Concerts in {city}</Text>
         <ConcertList />
         <Text style={styles.sectionTitle}>Popular Genres</Text>
+
         <PopularGenresGrid />
+
       </SafeAreaView>
       <BottomNavBar />
     </View>

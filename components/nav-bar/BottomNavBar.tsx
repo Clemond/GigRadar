@@ -15,7 +15,7 @@ export default function BottomNavBar() {
           key={index}
           onPress={() => {
             setCurrentScreen(element.screen);
-            navigation.navigate(element.navigationName);
+            navigation.navigate(element.navigationName as any);
           }}
           style={
             currentScreen === element.screen

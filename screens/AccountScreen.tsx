@@ -15,6 +15,7 @@ import { useLocationStore } from "../stores/useLocationStore";
 import { UseCurrentScreenStore } from "../stores/useCurrentScreenStore";
 import { getAuth } from "firebase/auth";
 import { useFavorites } from "../hooks/useFavorites";
+import { useEffect } from "react";
 
 export default function AccountScreen() {
   const { userData } = useUserStore();
@@ -36,6 +37,10 @@ export default function AccountScreen() {
     userData?.surname?.[0] ?? ""
   }`.toUpperCase();
 
+  useEffect(() => {
+    setCurrentScreen("account");
+  }, []);
+
   return (
     <View style={styles.background}>
       <SafeAreaView style={styles.safeArea}>
@@ -53,7 +58,6 @@ export default function AccountScreen() {
           style={styles.favoriteCard}
           onPress={() => {
             navigation.navigate("FavoriteScreen");
-            setCurrentScreen("favorite");
           }}
         >
           <Text style={styles.favoriteCardNameText}>Saved concerts</Text>

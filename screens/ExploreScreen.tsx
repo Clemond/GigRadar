@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { useLocationStore } from "../stores/useLocationStore";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { RootStackParamList } from "../types/navigation.types";
+import { UseCurrentScreenStore } from "../stores/useCurrentScreenStore";
 
 type ExploreScreenRouteProp = RouteProp<RootStackParamList, "ExploreScreen">;
 
@@ -16,9 +17,14 @@ export default function ExploreScreen() {
   const { country, city } = useLocationStore();
   const route = useRoute<ExploreScreenRouteProp>();
   const { filter } = route.params || {};
+  const { setCurrentScreen } = UseCurrentScreenStore();
   const [selectedFilters, setSelectedFilters] = useState<string[]>(
     filter ? [filter] : []
   );
+
+  useEffect(() => {
+    setCurrentScreen("explore");
+  }, []);
 
   useEffect(() => {
     setTodayChecked(selectedFilters.includes("Nearby"));

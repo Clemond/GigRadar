@@ -5,13 +5,19 @@ import BottomNavBar from "../components/nav-bar/BottomNavBar";
 import { useUserStore } from "../stores/useUserStore";
 import { useLocationStore } from "../stores/useLocationStore";
 import PopularGenresGrid from "../components/layouts/PopularGenresGrid";
-
+import { useEffect } from "react";
+import { UseCurrentScreenStore } from "../stores/useCurrentScreenStore";
 
 export default function HomeScreen() {
   const { userData } = useUserStore();
   const { city } = useLocationStore();
   const hour = new Date().getHours();
   const timeOfDay = hour < 12 ? "morning" : hour < 18 ? "afternoon" : "evening";
+  const { setCurrentScreen } = UseCurrentScreenStore();
+
+  useEffect(() => {
+    setCurrentScreen("home");
+  }, []);
 
   return (
     <View style={styles.background}>
@@ -26,7 +32,6 @@ export default function HomeScreen() {
         <Text style={styles.sectionTitle}>Popular Genres</Text>
 
         <PopularGenresGrid />
-
       </SafeAreaView>
       <BottomNavBar />
     </View>

@@ -10,10 +10,17 @@ import BottomNavBar from "../components/nav-bar/BottomNavBar";
 import { getAuth } from "@firebase/auth";
 import { useFavorites } from "../hooks/useFavorites";
 import ConcertCard from "../components/cards/ConcertCard";
+import { useEffect } from "react";
+import { UseCurrentScreenStore } from "../stores/useCurrentScreenStore";
 
 export default function FavoriteScreen() {
   const uid = getAuth().currentUser?.uid;
   const favorites = useFavorites(uid);
+  const { setCurrentScreen } = UseCurrentScreenStore();
+
+  useEffect(() => {
+    setCurrentScreen("favorite");
+  }, []);
 
   return (
     <View style={styles.background}>

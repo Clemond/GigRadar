@@ -6,7 +6,6 @@ import {
   StyleSheet
 } from "react-native";
 import UseTypeNavigation from "../../hooks/useTypeNavigation";
-import { UseCurrentScreenStore } from "../../stores/useCurrentScreenStore";
 import ConcertCard from "../cards/ConcertCard";
 import { useLocationStore } from "../../stores/useLocationStore";
 import { searchConcertsByCity } from "../../api/APIMethods";
@@ -14,7 +13,6 @@ import { useQuery } from "@tanstack/react-query";
 
 export default function ConcertList() {
   const navigation = UseTypeNavigation();
-  const { setCurrentScreen } = UseCurrentScreenStore();
   const { city } = useLocationStore();
 
   const {
@@ -45,7 +43,6 @@ export default function ConcertList() {
         style={styles.exploreButton}
         onPress={() => {
           navigation.navigate("ExploreScreen", {});
-          setCurrentScreen("explore");
         }}
       >
         <Text style={styles.exploreButtonText}>Explore All Events</Text>

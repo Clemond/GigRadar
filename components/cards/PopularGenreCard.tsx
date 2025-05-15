@@ -7,10 +7,12 @@ import {
 import { Card } from "react-native-paper";
 import UseTypeNavigation from "../../hooks/useTypeNavigation";
 import { UseCurrentScreenStore } from "../../stores/useCurrentScreenStore";
+import { IGenreName } from "../../types/IGenreName";
 
 interface ExploreGenreCardProps {
   genre: string;
   image: string;
+  genreToPass: IGenreName;
 }
 
 const genreImages: Record<string, any> = {
@@ -24,7 +26,8 @@ const genreImages: Record<string, any> = {
 
 export default function PopularGenreCard({
   genre,
-  image
+  image,
+  genreToPass
 }: ExploreGenreCardProps) {
   const navigation = UseTypeNavigation();
   const { setCurrentScreen } = UseCurrentScreenStore();
@@ -33,7 +36,7 @@ export default function PopularGenreCard({
     <Card style={styles.card}>
       <TouchableOpacity
         onPress={() => {
-          navigation.navigate("ExploreScreen", { filter: genre });
+          navigation.navigate("ExploreScreen", { filter: genreToPass });
           setCurrentScreen("explore");
         }}
       >

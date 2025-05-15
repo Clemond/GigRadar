@@ -44,7 +44,7 @@ export default function ConcertList() {
       <TouchableOpacity
         style={styles.exploreButton}
         onPress={() => {
-          navigation.navigate("ExploreScreen");
+          navigation.navigate("ExploreScreen", {});
           setCurrentScreen("explore");
         }}
       >

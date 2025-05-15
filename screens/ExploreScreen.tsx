@@ -5,12 +5,20 @@ import FilterChipBar from "../components/filter/FilterChipBar";
 import ConcertGrid from "../components/layouts/ConcertGrid";
 import { useEffect, useState } from "react";
 import { useLocationStore } from "../stores/useLocationStore";
+import { RouteProp, useRoute } from "@react-navigation/native";
+import { RootStackParamList } from "../types/navigation.types";
+
+type ExploreScreenRouteProp = RouteProp<RootStackParamList, "ExploreScreen">;
 
 export default function ExploreScreen() {
-  const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [isTodayChecked, setTodayChecked] = useState<boolean>(false);
   const { country, city } = useLocationStore();
+  const route = useRoute<ExploreScreenRouteProp>();
+  const { filter } = route.params || {};
+  const [selectedFilters, setSelectedFilters] = useState<string[]>(
+    filter ? [filter] : []
+  );
 
   useEffect(() => {
     setTodayChecked(selectedFilters.includes("Nearby"));

@@ -1,25 +1,32 @@
 import { View, StyleSheet } from "react-native";
-import UseTypeNavigation from "../../hooks/useTypeNavigation";
-import { UseCurrentScreenStore } from "../../stores/useCurrentScreenStore";
 import PopularGenreCard from "../cards/PopularGenreCard";
 
 export default function PopularGenresGrid() {
-  const navigation = UseTypeNavigation();
-  const { setCurrentScreen } = UseCurrentScreenStore();
-
   return (
     <View style={styles.genreCard}>
       <View>
-        <PopularGenreCard genre="Pop" image="pop" />
-        <PopularGenreCard genre="Rock" image="rock" />
+        <PopularGenreCard genre="Pop" image="pop" genreToPass={"Pop"} />
+        <PopularGenreCard genre="Rock" image="rock" genreToPass={"Rock"} />
       </View>
       <View>
-        <PopularGenreCard genre="Rap" image="hiphop" />
-        <PopularGenreCard genre="EDM" image="electronic" />
+        <PopularGenreCard genre="Rap" image="hiphop" genreToPass={"HipHop"} />
+        <PopularGenreCard
+          genre="EDM"
+          image="electronic"
+          genreToPass={"Electronic"}
+        />
       </View>
       <View>
-        <PopularGenreCard genre="Classic" image="classical" />
-        <PopularGenreCard genre="Country" image="country" />
+        <PopularGenreCard
+          genre="Classic"
+          image="classical"
+          genreToPass={"Classical"}
+        />
+        <PopularGenreCard
+          genre="Country"
+          image="country"
+          genreToPass={"Country"}
+        />
       </View>
     </View>
   );

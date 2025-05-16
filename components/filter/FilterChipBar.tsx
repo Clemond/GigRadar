@@ -66,7 +66,7 @@ export default function FilterChipBar({
 
 const styles = StyleSheet.create({
   container: {
-    paddingBottom: 15
+    marginBottom: 15
   },
   scrollContent: {
     flexDirection: "row",

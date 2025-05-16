@@ -10,6 +10,7 @@ import ConcertCard from "../cards/ConcertCard";
 import { useLocationStore } from "../../stores/useLocationStore";
 import { searchConcertsByCity } from "../../api/APIMethods";
 import { useQuery } from "@tanstack/react-query";
+import { ActivityIndicator } from "react-native-paper";
 
 export default function ConcertList() {
   const navigation = UseTypeNavigation();
@@ -30,6 +31,20 @@ export default function ConcertList() {
   });
 
   if (!concertList) return;
+
+  if (isLoading) {
+    return (
+      <ActivityIndicator
+        animating={true}
+        color="#F77E32"
+        size={70}
+      ></ActivityIndicator>
+    );
+  }
+
+  if (isError) {
+    return <Text>Error loading concerts. Please try again.</Text>;
+  }
 
   return (
     <View style={styles.recommendedCard}>

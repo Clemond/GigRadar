@@ -28,16 +28,6 @@ export function getAccountOptions(
       }
     },
     {
-      icon: "music",
-      label: "Favorite Genres",
-      onPress: () => {}
-    },
-    {
-      icon: "cog",
-      label: "Settings",
-      onPress: () => {}
-    },
-    {
       icon: "logout",
       label: "Log Out",
       onPress: () =>

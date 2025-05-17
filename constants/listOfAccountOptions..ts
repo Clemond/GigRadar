@@ -22,8 +22,10 @@ export function getAccountOptions(
     },
     {
       icon: "calendar-check",
-      label: "My Bookings",
-      onPress: () => {}
+      label: "My Saved Concerts",
+      onPress: () => {
+        navigation.navigate("FavoriteScreen");
+      }
     },
     {
       icon: "music",

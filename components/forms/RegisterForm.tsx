@@ -28,10 +28,12 @@ export default function RegisterForm({
 
   async function handleSignup() {
     Keyboard.dismiss();
-    const user = await signUp({ email, password, firstname, surname });
+    const user = await signUp(
+      { email, password, firstname, surname },
+      setSnackbarMsg
+    );
 
     if (!user) {
-      setSnackbarMsg("All Fields Required");
       setIsSnackbarVisible(true);
       return;
     }

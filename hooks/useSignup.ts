@@ -9,7 +9,10 @@ import { useState } from "react";
 export function useSignup() {
   const [loading, setLoading] = useState(false);
 
-  const signUp = async (user: IRegistrationData) => {
+  const signUp = async (
+    user: IRegistrationData,
+    setErrorMsg: (msg: string) => void
+  ) => {
     setLoading(true);
 
     try {
@@ -30,7 +33,27 @@ export function useSignup() {
       await setDoc(doc(db, "user_data", uid), userData);
 
       return userCredential.user;
-    } catch (error) {
+    } catch (error: any) {
+      let errorMsg = "An unexpected error occurred";
+
+      if (error.code) {
+        switch (error.code) {
+          case "auth/email-already-in-use":
+            errorMsg = "Email is already in use.";
+            break;
+          case "auth/invalid-email":
+            errorMsg = "Invalid email address.";
+            break;
+          case "auth/weak-password":
+            errorMsg = "Password should be at least 6 characters.";
+            break;
+          default:
+            errorMsg = "Something went wrong. Please try again.";
+        }
+      }
+
+      setErrorMsg(errorMsg);
+      console.log(error);
       return null;
     } finally {
       setLoading(false);

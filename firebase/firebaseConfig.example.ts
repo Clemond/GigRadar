@@ -3,6 +3,11 @@
 // When setting up the project, please create your own firebaseConfig.ts
 // by copying this file and adding your Firebase project details.
 
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { initializeApp } from "firebase/app";
+import { getReactNativePersistence, initializeAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+
 const firebaseConfig = {
   apiKey: "YOUR_API_KEY_HERE",
   authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
@@ -11,6 +16,14 @@ const firebaseConfig = {
   messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
   appId: "YOUR_APP_ID"
 };
+
+export const app = initializeApp(firebaseConfig);
+
+export const auth = initializeAuth(app, {
+  persistence: getReactNativePersistence(AsyncStorage)
+});
+
+export const db = getFirestore(app);
 
 // OBS: DO NOT COMMIT THIS FILE WITH YOUR REAL API KEY!
 // Copy this to a new file called `firebaseConfig.ts` and

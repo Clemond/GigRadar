@@ -37,7 +37,8 @@ export default function BottomNavBar() {
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 15,
-    paddingBottom: 10,
+    paddingBottom: 20,
+    paddingTop: 10,
     borderTopRightRadius: 10,
     borderTopLeftRadius: 10,
     flexDirection: "row",

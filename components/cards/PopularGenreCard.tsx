@@ -2,7 +2,8 @@ import {
   Text,
   TouchableOpacity,
   ImageBackground,
-  StyleSheet
+  StyleSheet,
+  View
 } from "react-native";
 import { Card } from "react-native-paper";
 import UseTypeNavigation from "../../hooks/useTypeNavigation";
@@ -32,22 +33,24 @@ export default function PopularGenreCard({
 
   return (
     <Card style={styles.card}>
-      <TouchableOpacity
-        onPress={() => {
-          navigation.navigate("ExploreScreen", { filter: genreToPass });
-        }}
-      >
-        <ImageBackground
-          source={genreImages[image]}
-          imageStyle={{ opacity: 0.5 }}
-          style={styles.cardBackgroundImage}
-          resizeMode="cover"
+      <View style={styles.cardWrapper}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("ExploreScreen", { filter: genreToPass });
+          }}
         >
-          <Card.Content style={styles.cardContentText}>
-            <Text style={styles.cardText}>{genre}</Text>
-          </Card.Content>
-        </ImageBackground>
-      </TouchableOpacity>
+          <ImageBackground
+            source={genreImages[image]}
+            imageStyle={{ opacity: 0.5 }}
+            style={styles.cardBackgroundImage}
+            resizeMode="cover"
+          >
+            <Card.Content style={styles.cardContentText}>
+              <Text style={styles.cardText}>{genre}</Text>
+            </Card.Content>
+          </ImageBackground>
+        </TouchableOpacity>
+      </View>
     </Card>
   );
 }
@@ -56,10 +59,12 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: "#1A3C47",
     margin: 10,
-    borderRadius: 10,
-    overflow: "hidden",
     width: 90,
     height: 70
+  },
+  cardWrapper: {
+    borderRadius: 10,
+    overflow: "hidden"
   },
   cardBackgroundImage: {
     width: "100%",

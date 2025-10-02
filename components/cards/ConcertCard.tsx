@@ -3,7 +3,8 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  Alert
+  Alert,
+  View
 } from "react-native";
 import { Card, Icon } from "react-native-paper";
 import { useEffect, useState } from "react";
@@ -35,51 +36,53 @@ export default function ConcertCard({
 
   return (
     <Card style={styles.card} onPress={() => {}}>
-      <TouchableOpacity onPress={() => setIsShowModal(true)}>
-        <ImageBackground
-          source={{ uri: concert.images?.[0].url }}
-          imageStyle={{ opacity: 0.5 }}
-          style={styles.cardBackgroundImage}
-          resizeMode="cover"
-        >
-          <TouchableOpacity
-            style={styles.likeButton}
-            onPress={() => {
-              if (!uid) return Alert.alert("Error", "please try again");
-
-              if (isLiked) {
-                removeConcertFromFavorites(uid, concert);
-              } else {
-                addConcertToFavorites(uid, concert);
-              }
-
-              setIsLiked(!isLiked);
-            }}
+      <View style={styles.cardWrapper}>
+        <TouchableOpacity onPress={() => setIsShowModal(true)}>
+          <ImageBackground
+            source={{ uri: concert.images?.[0].url }}
+            imageStyle={{ opacity: 0.5 }}
+            style={styles.cardBackgroundImage}
+            resizeMode="cover"
           >
-            <Icon
-              size={25}
-              source={isLiked ? "heart" : "heart-outline"}
-              color="#F77E32"
-            />
-          </TouchableOpacity>
-          <Card.Content style={styles.cardText}>
-            <Text style={styles.cardTitle}>
-              {concert._embedded?.attractions?.[0].name ?? "TBA"}
-            </Text>
-            <Text style={styles.cardSubtitle}>
-              {concert._embedded?.venues?.[0].city?.name}
-            </Text>
-            <Text style={styles.cardSubtitle}>
-              {concert.dates?.start?.localDate}
-            </Text>
-          </Card.Content>
-        </ImageBackground>
-      </TouchableOpacity>
-      <ConcertDetailsModal
-        concert={concert}
-        visible={isShowModal}
-        hideModal={hideModal}
-      />
+            <TouchableOpacity
+              style={styles.likeButton}
+              onPress={() => {
+                if (!uid) return Alert.alert("Error", "please try again");
+
+                if (isLiked) {
+                  removeConcertFromFavorites(uid, concert);
+                } else {
+                  addConcertToFavorites(uid, concert);
+                }
+
+                setIsLiked(!isLiked);
+              }}
+            >
+              <Icon
+                size={25}
+                source={isLiked ? "heart" : "heart-outline"}
+                color="#F77E32"
+              />
+            </TouchableOpacity>
+            <Card.Content style={styles.cardText}>
+              <Text style={styles.cardTitle}>
+                {concert._embedded?.attractions?.[0].name ?? "TBA"}
+              </Text>
+              <Text style={styles.cardSubtitle}>
+                {concert._embedded?.venues?.[0].city?.name}
+              </Text>
+              <Text style={styles.cardSubtitle}>
+                {concert.dates?.start?.localDate}
+              </Text>
+            </Card.Content>
+          </ImageBackground>
+        </TouchableOpacity>
+        <ConcertDetailsModal
+          concert={concert}
+          visible={isShowModal}
+          hideModal={hideModal}
+        />
+      </View>
     </Card>
   );
 }
@@ -88,10 +91,12 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: "#1A3C47",
     margin: 15,
-    borderRadius: 10,
-    overflow: "hidden",
     width: 150,
     height: 150
+  },
+  cardWrapper: {
+    borderRadius: 10,
+    overflow: "hidden"
   },
   cardBackgroundImage: {
     width: "100%",
